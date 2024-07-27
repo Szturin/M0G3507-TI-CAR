@@ -1,7 +1,7 @@
 # FIXED
 
 Driver/Encoder.o: ../Driver/Encoder.c \
- C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Driver/Encoder.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Encoder.h \
  ti_msp_dl_config.h \
  S:/ti/mspm0_sdk_2_00_01_00/source/ti/devices/msp/msp.h \
  S:/ti/mspm0_sdk_2_00_01_00/source/ti/devices/DeviceFamily.h \
@@ -76,7 +76,7 @@ Driver/Encoder.o: ../Driver/Encoder.c \
  S:/ti/mspm0_sdk_2_00_01_00/source/ti/driverlib/m0p/dl_interrupt.h \
  S:/ti/mspm0_sdk_2_00_01_00/source/ti/driverlib/m0p/dl_systick.h
 
-C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Driver/Encoder.h:
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Encoder.h:
 
 ti_msp_dl_config.h:
 

@@ -86,37 +86,38 @@ uint8_t OLED_DisplayBuf[8][128];
 
 /*********begin********外加的******************/
 //向OLED寄存器地址写一个byte的数据
+
+
 int I2C_WriteByte(uint8_t addr,uint8_t data)
 {
+/*
   uint8_t buff[2] = {0};
   buff[0] = addr;
   buff[1] = data;
-  /* Wait for I2C to be Idle */
+
   while (!(
             DL_I2C_getControllerStatus(I2C_OLED_INST) & DL_I2C_CONTROLLER_STATUS_IDLE))
             ;
 
-        /* Send the packet to the controller.
-         * This function will send Start + Stop automatically.
-         */
+
         DL_I2C_startControllerTransfer(I2C_OLED_INST, OLED_ADDR,
             DL_I2C_CONTROLLER_DIRECTION_TX, 2);
         DL_I2C_fillControllerTXFIFO(I2C_OLED_INST, &buff[0], 2);
-      /* Poll until the Controller writes all bytes */
+ 
       while (DL_I2C_getControllerStatus(I2C_OLED_INST) &
                      DL_I2C_CONTROLLER_STATUS_BUSY_BUS)
                   ;
 
-      /* Trap if there was an error */
       if (DL_I2C_getControllerStatus(I2C_OLED_INST) &
           DL_I2C_CONTROLLER_STATUS_ERROR) {
-          /* LED will remain high if there is an error */
+
           __BKPT(0);
       }
     return 0;
+    */
 }
 
-/*********end********外加的******************/
+
 
 
 

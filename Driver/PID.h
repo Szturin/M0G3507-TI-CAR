@@ -7,3 +7,4 @@ float Turn_hd_PID();
 float Velocity_PID(float velocity,float velocity_calcu);
 void PID_Init();
 void Get_TraceData();
+float Turn_imu_PID(int yaw, int caclu_yaw);

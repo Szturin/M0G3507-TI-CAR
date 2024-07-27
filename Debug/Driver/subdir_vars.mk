@@ -8,6 +8,7 @@ SHELL = cmd.exe
 C_SRCS += \
 ../Driver/Encoder.c \
 ../Driver/GWKJ.c \
+../Driver/Motor_ctrl.c \
 ../Driver/OLED.c \
 ../Driver/OLED_Data.c \
 ../Driver/PID.c \
@@ -18,6 +19,7 @@ C_SRCS += \
 C_DEPS += \
 ./Driver/Encoder.d \
 ./Driver/GWKJ.d \
+./Driver/Motor_ctrl.d \
 ./Driver/OLED.d \
 ./Driver/OLED_Data.d \
 ./Driver/PID.d \
@@ -28,6 +30,7 @@ C_DEPS += \
 OBJS += \
 ./Driver/Encoder.o \
 ./Driver/GWKJ.o \
+./Driver/Motor_ctrl.o \
 ./Driver/OLED.o \
 ./Driver/OLED_Data.o \
 ./Driver/PID.o \
@@ -38,6 +41,7 @@ OBJS += \
 OBJS__QUOTED += \
 "Driver\Encoder.o" \
 "Driver\GWKJ.o" \
+"Driver\Motor_ctrl.o" \
 "Driver\OLED.o" \
 "Driver\OLED_Data.o" \
 "Driver\PID.o" \
@@ -48,6 +52,7 @@ OBJS__QUOTED += \
 C_DEPS__QUOTED += \
 "Driver\Encoder.d" \
 "Driver\GWKJ.d" \
+"Driver\Motor_ctrl.d" \
 "Driver\OLED.d" \
 "Driver\OLED_Data.d" \
 "Driver\PID.d" \
@@ -58,6 +63,7 @@ C_DEPS__QUOTED += \
 C_SRCS__QUOTED += \
 "../Driver/Encoder.c" \
 "../Driver/GWKJ.c" \
+"../Driver/Motor_ctrl.c" \
 "../Driver/OLED.c" \
 "../Driver/OLED_Data.c" \
 "../Driver/PID.c" \

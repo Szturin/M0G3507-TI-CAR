@@ -2,6 +2,7 @@
 #include "string.h"
 #include "ti_msp_dl_config.h"
 #include "main.h"
+#define BUFFER_SIZE 256  // 定义缓冲区大小
 
 uint8_t Serial_RxPacket[100];
 /*PID调试*/
@@ -70,6 +71,92 @@ void Screen_SendString(char *str)
     {
         DL_UART_Main_transmitDataBlocking(UART_Screen_INST, *str++);
     }
+}
+
+void HMI_send_string(char *name, char *showdata)
+{
+    char buffer[BUFFER_SIZE];
+    int length;
+
+    // 构造要发送的字符串，确保缓冲区足够大
+    length = snprintf(buffer, sizeof(buffer), "%s=\"%s\"\xff\xff\xff", name, showdata);
+
+    // 检查是否发生了缓冲区溢出
+    if (length >= sizeof(buffer))
+    {
+        // 缓冲区溢出处理，例如可以通过截断字符串或者增加缓冲区大小来解决
+        // 这里只是简单地截断字符串以确保不会发送超出缓冲区的内容
+        buffer[sizeof(buffer) - 1] = '\0'; // 确保字符串以 null 结尾
+    }
+
+    // 使用 Screen_SendString 发送构造好的字符串
+    Screen_SendString(buffer);
+}
+
+void HMI_send_number(char* name, int num)
+{
+    char buffer[BUFFER_SIZE];
+    int length = snprintf(buffer, sizeof(buffer), "%s=%d\xff\xff\xff", name, num);
+    if (length >= BUFFER_SIZE)
+    {
+        // 缓冲区溢出处理
+    }
+    Screen_SendString(buffer);
+}
+
+void HMI_send_float(char* name, float num)
+{
+    char buffer[BUFFER_SIZE];
+    int num_int = (int)(num * 100);
+    int length = snprintf(buffer, sizeof(buffer), "%s=%d\xff\xff\xff", name, num_int);
+    if (length >= BUFFER_SIZE)
+    {
+        // 缓冲区溢出处理
+    }
+    Screen_SendString(buffer);
+}
+
+void HMI_Wave(char* name, int ch, int val)
+{
+    char buffer[BUFFER_SIZE];
+    int length = snprintf(buffer, sizeof(buffer), "add %s,%d,%d\xff\xff\xff", name, ch, val);
+    if (length >= BUFFER_SIZE)
+    {
+        // 缓冲区溢出处理
+    }
+    Screen_SendString(buffer);
+}
+
+void HMI_Wave_Fast(char* name, int ch, int count, int* show_data)
+{
+    char buffer[BUFFER_SIZE];
+    int length = snprintf(buffer, sizeof(buffer), "addt %s,%d,%d\xff\xff\xff", name, ch, count);
+    if (length >= BUFFER_SIZE)
+    {
+        // 缓冲区溢出处理
+    }
+    Screen_SendString(buffer);
+
+    delay_ms(100);
+
+    for (int i = 0; i < count; i++)
+    {
+        // 发送每个字符
+        DL_UART_Main_transmitDataBlocking(UART_Screen_INST, (char)show_data[i]);
+    }
+    // 发送结束标志
+    Screen_SendString("\xff\xff\xff");
+}
+
+void HMI_Wave_Clear(char* name, int ch)
+{
+    char buffer[BUFFER_SIZE];
+    int length = snprintf(buffer, sizeof(buffer), "cle %s,%d\xff\xff\xff", name, ch);
+    if (length >= BUFFER_SIZE)
+    {
+        // 缓冲区溢出处理
+    }
+    Screen_SendString(buffer);
 }
 
 void UART_0_INST_IRQHandler(void)

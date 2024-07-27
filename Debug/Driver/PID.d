@@ -1,7 +1,7 @@
 # FIXED
 
 Driver/PID.o: ../Driver/PID.c \
- C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Driver/PID.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/PID.h \
  ti_msp_dl_config.h \
  S:/ti/mspm0_sdk_2_00_01_00/source/ti/devices/msp/msp.h \
  S:/ti/mspm0_sdk_2_00_01_00/source/ti/devices/DeviceFamily.h \
@@ -75,21 +75,21 @@ Driver/PID.o: ../Driver/PID.c \
  S:/ti/mspm0_sdk_2_00_01_00/source/ti/driverlib/dl_wwdt.h \
  S:/ti/mspm0_sdk_2_00_01_00/source/ti/driverlib/m0p/dl_interrupt.h \
  S:/ti/mspm0_sdk_2_00_01_00/source/ti/driverlib/m0p/dl_systick.h \
- C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Driver/Serial.h \
- C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/main.h \
- C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Driver/Encoder.h \
- C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Driver/OLED.h \
- C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Driver/OLED_Data.h \
- C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/MPU6050/bsp_mpu6050.h \
- C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/MPU6050/board.h \
- C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/System/Delay.h \
- C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/MPU6050/inv_mpu.h \
- C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/System/Timer.h \
- C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Driver/motor.h \
- C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Driver/GWKJ.h \
- C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Driver/gw_grayscale_sensor.h
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Serial.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/main.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Encoder.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/OLED.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/OLED_Data.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/MPU6050/bsp_mpu6050.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/MPU6050/board.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Delay.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/MPU6050/inv_mpu.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Timer.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/motor.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/GWKJ.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/gw_grayscale_sensor.h
 
-C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Driver/PID.h:
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/PID.h:
 
 ti_msp_dl_config.h:
 
@@ -237,28 +237,28 @@ S:/ti/mspm0_sdk_2_00_01_00/source/ti/driverlib/m0p/dl_interrupt.h:
 
 S:/ti/mspm0_sdk_2_00_01_00/source/ti/driverlib/m0p/dl_systick.h:
 
-C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Driver/Serial.h:
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Serial.h:
 
-C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/main.h:
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/main.h:
 
-C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Driver/Encoder.h:
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Encoder.h:
 
-C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Driver/OLED.h:
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/OLED.h:
 
-C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Driver/OLED_Data.h:
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/OLED_Data.h:
 
-C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/MPU6050/bsp_mpu6050.h:
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/MPU6050/bsp_mpu6050.h:
 
-C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/MPU6050/board.h:
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/MPU6050/board.h:
 
-C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/System/Delay.h:
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Delay.h:
 
-C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/MPU6050/inv_mpu.h:
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/MPU6050/inv_mpu.h:
 
-C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/System/Timer.h:
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Timer.h:
 
-C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Driver/motor.h:
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/motor.h:
 
-C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Driver/GWKJ.h:
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/GWKJ.h:
 
-C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Driver/gw_grayscale_sensor.h:
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/gw_grayscale_sensor.h:

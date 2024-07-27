@@ -106,23 +106,14 @@ extern "C" {
 #define TIMER_1_INST_IRQHandler                                 TIMG0_IRQHandler
 #define TIMER_1_INST_INT_IRQN                                   (TIMG0_INT_IRQn)
 #define TIMER_1_INST_LOAD_VALUE                                          (1999U)
+/* Defines for TIMER_2 */
+#define TIMER_2_INST                                                     (TIMG7)
+#define TIMER_2_INST_IRQHandler                                 TIMG7_IRQHandler
+#define TIMER_2_INST_INT_IRQN                                   (TIMG7_INT_IRQn)
+#define TIMER_2_INST_LOAD_VALUE                                          (1999U)
 
 
 
-
-/* Defines for I2C_OLED */
-#define I2C_OLED_INST                                                       I2C0
-#define I2C_OLED_INST_IRQHandler                                 I2C0_IRQHandler
-#define I2C_OLED_INST_INT_IRQN                                     I2C0_INT_IRQn
-#define I2C_OLED_BUS_SPEED_HZ                                             400000
-#define GPIO_I2C_OLED_SDA_PORT                                             GPIOA
-#define GPIO_I2C_OLED_SDA_PIN                                     DL_GPIO_PIN_28
-#define GPIO_I2C_OLED_IOMUX_SDA                                   (IOMUX_PINCM3)
-#define GPIO_I2C_OLED_IOMUX_SDA_FUNC                    IOMUX_PINCM3_PF_I2C0_SDA
-#define GPIO_I2C_OLED_SCL_PORT                                             GPIOA
-#define GPIO_I2C_OLED_SCL_PIN                                     DL_GPIO_PIN_31
-#define GPIO_I2C_OLED_IOMUX_SCL                                   (IOMUX_PINCM6)
-#define GPIO_I2C_OLED_IOMUX_SCL_FUNC                    IOMUX_PINCM6_PF_I2C0_SCL
 
 /* Defines for I2C_MPU6050 */
 #define I2C_MPU6050_INST                                                    I2C1
@@ -195,22 +186,22 @@ extern "C" {
 /* Defines for USER_SWITCH_S2: GPIOB.21 with pinCMx 49 on package pin 20 */
 #define GPIO_SWITCH_USER_SWITCH_S2_PIN                          (DL_GPIO_PIN_21)
 #define GPIO_SWITCH_USER_SWITCH_S2_IOMUX                         (IOMUX_PINCM49)
-/* Defines for PIN_FL2: GPIOB.24 with pinCMx 52 on package pin 23 */
-#define GPIO_MOTOR_PIN_FL2_PORT                                          (GPIOB)
-#define GPIO_MOTOR_PIN_FL2_PIN                                  (DL_GPIO_PIN_24)
-#define GPIO_MOTOR_PIN_FL2_IOMUX                                 (IOMUX_PINCM52)
-/* Defines for PIN_FL1: GPIOA.26 with pinCMx 59 on package pin 30 */
+/* Defines for PIN_FL2: GPIOA.7 with pinCMx 14 on package pin 49 */
+#define GPIO_MOTOR_PIN_FL2_PORT                                          (GPIOA)
+#define GPIO_MOTOR_PIN_FL2_PIN                                   (DL_GPIO_PIN_7)
+#define GPIO_MOTOR_PIN_FL2_IOMUX                                 (IOMUX_PINCM14)
+/* Defines for PIN_FL1: GPIOA.4 with pinCMx 9 on package pin 44 */
 #define GPIO_MOTOR_PIN_FL1_PORT                                          (GPIOA)
-#define GPIO_MOTOR_PIN_FL1_PIN                                  (DL_GPIO_PIN_26)
-#define GPIO_MOTOR_PIN_FL1_IOMUX                                 (IOMUX_PINCM59)
-/* Defines for PIN_FR1: GPIOB.9 with pinCMx 26 on package pin 61 */
-#define GPIO_MOTOR_PIN_FR1_PORT                                          (GPIOB)
-#define GPIO_MOTOR_PIN_FR1_PIN                                   (DL_GPIO_PIN_9)
-#define GPIO_MOTOR_PIN_FR1_IOMUX                                 (IOMUX_PINCM26)
-/* Defines for PIN_FR2: GPIOA.27 with pinCMx 60 on package pin 31 */
-#define GPIO_MOTOR_PIN_FR2_PORT                                          (GPIOA)
-#define GPIO_MOTOR_PIN_FR2_PIN                                  (DL_GPIO_PIN_27)
-#define GPIO_MOTOR_PIN_FR2_IOMUX                                 (IOMUX_PINCM60)
+#define GPIO_MOTOR_PIN_FL1_PIN                                   (DL_GPIO_PIN_4)
+#define GPIO_MOTOR_PIN_FL1_IOMUX                                  (IOMUX_PINCM9)
+/* Defines for PIN_FR1: GPIOA.3 with pinCMx 8 on package pin 43 */
+#define GPIO_MOTOR_PIN_FR1_PORT                                          (GPIOA)
+#define GPIO_MOTOR_PIN_FR1_PIN                                   (DL_GPIO_PIN_3)
+#define GPIO_MOTOR_PIN_FR1_IOMUX                                  (IOMUX_PINCM8)
+/* Defines for PIN_FR2: GPIOB.14 with pinCMx 31 on package pin 2 */
+#define GPIO_MOTOR_PIN_FR2_PORT                                          (GPIOB)
+#define GPIO_MOTOR_PIN_FR2_PIN                                  (DL_GPIO_PIN_14)
+#define GPIO_MOTOR_PIN_FR2_IOMUX                                 (IOMUX_PINCM31)
 /* Defines for PIN_FSTBY: GPIOB.19 with pinCMx 45 on package pin 16 */
 #define GPIO_MOTOR_PIN_FSTBY_PORT                                        (GPIOB)
 #define GPIO_MOTOR_PIN_FSTBY_PIN                                (DL_GPIO_PIN_19)
@@ -282,7 +273,7 @@ void SYSCFG_DL_GPIO_init(void);
 void SYSCFG_DL_SYSCTL_init(void);
 void SYSCFG_DL_PWM_MOTOR_init(void);
 void SYSCFG_DL_TIMER_1_init(void);
-void SYSCFG_DL_I2C_OLED_init(void);
+void SYSCFG_DL_TIMER_2_init(void);
 void SYSCFG_DL_I2C_MPU6050_init(void);
 void SYSCFG_DL_UART_0_init(void);
 void SYSCFG_DL_UART_SOC_init(void);

@@ -3,6 +3,7 @@
 "./startup_mspm0g350x_ticlang.o"
 "./Driver/Encoder.o"
 "./Driver/GWKJ.o"
+"./Driver/Motor_ctrl.o"
 "./Driver/OLED.o"
 "./Driver/OLED_Data.o"
 "./Driver/PID.o"

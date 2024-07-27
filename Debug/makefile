@@ -15,6 +15,7 @@ ORDERED_OBJS += \
 "./startup_mspm0g350x_ticlang.o" \
 "./Driver/Encoder.o" \
 "./Driver/GWKJ.o" \
+"./Driver/Motor_ctrl.o" \
 "./Driver/OLED.o" \
 "./Driver/OLED_Data.o" \
 "./Driver/PID.o" \
@@ -142,42 +143,42 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-empty_LP_MSPM0G3507_nortos_ticlang.out 
+M0G3507-TI-CAR-main.out 
 
 EXE_OUTPUTS__QUOTED += \
-"empty_LP_MSPM0G3507_nortos_ticlang.out" 
+"M0G3507-TI-CAR-main.out" 
 
 BIN_OUTPUTS += \
-empty_LP_MSPM0G3507_nortos_ticlang.txt 
+M0G3507-TI-CAR-main.txt 
 
 BIN_OUTPUTS__QUOTED += \
-"empty_LP_MSPM0G3507_nortos_ticlang.txt" 
+"M0G3507-TI-CAR-main.txt" 
 
 
 # All Target
 all: $(OBJS) $(GEN_CMDS)
-	@$(MAKE) --no-print-directory -Onone "empty_LP_MSPM0G3507_nortos_ticlang.out" secondary-outputs
+	@$(MAKE) --no-print-directory -Onone "M0G3507-TI-CAR-main.out" secondary-outputs
 
 # Tool invocations
-empty_LP_MSPM0G3507_nortos_ticlang.out: $(OBJS) $(GEN_CMDS)
+M0G3507-TI-CAR-main.out: $(OBJS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: Arm Linker'
-	"S:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-armllvm_3.2.2.LTS/bin/tiarmclang.exe" @"device.opt"  -march=thumbv6m -mcpu=cortex-m0plus -mfloat-abi=soft -mlittle-endian -mthumb -O0 -gdwarf-3 -Wl,-m"empty_LP_MSPM0G3507_nortos_ticlang.map" -Wl,-i"S:/ti/mspm0_sdk_2_00_01_00/source" -Wl,-i"C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang" -Wl,-i"C:/Users/123/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug/syscfg" -Wl,-i"S:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-armllvm_3.2.2.LTS/lib" -Wl,--diag_wrap=off -Wl,--display_error_number -Wl,--warn_sections -Wl,--xml_link_info="empty_LP_MSPM0G3507_nortos_ticlang_linkInfo.xml" -Wl,--rom_model -o "empty_LP_MSPM0G3507_nortos_ticlang.out" $(ORDERED_OBJS)
+	"S:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-armllvm_3.2.2.LTS/bin/tiarmclang.exe" @"device.opt"  -march=thumbv6m -mcpu=cortex-m0plus -mfloat-abi=soft -mlittle-endian -mthumb -O0 -gdwarf-3 -Wl,-m"M0G3507-TI-CAR-main.map" -Wl,-i"S:/ti/mspm0_sdk_2_00_01_00/source" -Wl,-i"C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main" -Wl,-i"C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Debug/syscfg" -Wl,-i"S:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-armllvm_3.2.2.LTS/lib" -Wl,--diag_wrap=off -Wl,--display_error_number -Wl,--warn_sections -Wl,--xml_link_info="M0G3507-TI-CAR-main_linkInfo.xml" -Wl,--rom_model -o "M0G3507-TI-CAR-main.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
-empty_LP_MSPM0G3507_nortos_ticlang.txt: $(EXE_OUTPUTS)
+M0G3507-TI-CAR-main.txt: $(EXE_OUTPUTS)
 	@echo 'Building secondary target: "$@"'
 	@echo 'Invoking: Arm Hex Utility'
-	"S:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-armllvm_3.2.2.LTS/bin/tiarmhex.exe" --diag_wrap=off --ti_txt -o "empty_LP_MSPM0G3507_nortos_ticlang.txt" $(EXE_OUTPUTS__QUOTED)
+	"S:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-armllvm_3.2.2.LTS/bin/tiarmhex.exe" --diag_wrap=off --ti_txt -o "M0G3507-TI-CAR-main.txt" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building secondary target: "$@"'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(BIN_OUTPUTS__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.o" "ti_msp_dl_config.o" "startup_mspm0g350x_ticlang.o" "Driver\Encoder.o" "Driver\GWKJ.o" "Driver\OLED.o" "Driver\OLED_Data.o" "Driver\PID.o" "Driver\PWM.o" "Driver\Serial.o" "Driver\motor.o" "MPU6050\board.o" "MPU6050\bsp_mpu6050.o" "MPU6050\inv_mpu.o" "MPU6050\inv_mpu_dmp_motion_driver.o" "System\Delay.o" "System\Timer.o" 
-	-$(RM) "main.d" "ti_msp_dl_config.d" "startup_mspm0g350x_ticlang.d" "Driver\Encoder.d" "Driver\GWKJ.d" "Driver\OLED.d" "Driver\OLED_Data.d" "Driver\PID.d" "Driver\PWM.d" "Driver\Serial.d" "Driver\motor.d" "MPU6050\board.d" "MPU6050\bsp_mpu6050.d" "MPU6050\inv_mpu.d" "MPU6050\inv_mpu_dmp_motion_driver.d" "System\Delay.d" "System\Timer.d" 
+	-$(RM) "main.o" "ti_msp_dl_config.o" "startup_mspm0g350x_ticlang.o" "Driver\Encoder.o" "Driver\GWKJ.o" "Driver\Motor_ctrl.o" "Driver\OLED.o" "Driver\OLED_Data.o" "Driver\PID.o" "Driver\PWM.o" "Driver\Serial.o" "Driver\motor.o" "MPU6050\board.o" "MPU6050\bsp_mpu6050.o" "MPU6050\inv_mpu.o" "MPU6050\inv_mpu_dmp_motion_driver.o" "System\Delay.o" "System\Timer.o" 
+	-$(RM) "main.d" "ti_msp_dl_config.d" "startup_mspm0g350x_ticlang.d" "Driver\Encoder.d" "Driver\GWKJ.d" "Driver\Motor_ctrl.d" "Driver\OLED.d" "Driver\OLED_Data.d" "Driver\PID.d" "Driver\PWM.d" "Driver\Serial.d" "Driver\motor.d" "MPU6050\board.d" "MPU6050\bsp_mpu6050.d" "MPU6050\inv_mpu.d" "MPU6050\inv_mpu_dmp_motion_driver.d" "System\Delay.d" "System\Timer.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

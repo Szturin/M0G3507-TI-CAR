@@ -35,4 +35,7 @@ void Screen_SendString(char *str);
 void UART_0_INST_IRQHandler(void);
 void UART_SOC_INST_IRQHandler(void);
 void UART_Screen_INST_IRQHandler(void);
+
+/*串口屏函数*/
+void HMI_send_string(char* name, char* showdata);
 #endif

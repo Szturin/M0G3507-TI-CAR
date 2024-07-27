@@ -18,12 +18,16 @@ void Motor_Off(void)
 void Set_Speed(float duty1,float duty2)
 {
     uint32_t compareValue = 0;
+    float temp_duty_1;
+    float temp_duty_2;
     if(duty1 < 0)
     {
-        compareValue = 3199 - 3199 * (-duty1/100.0);
-        DL_TimerA_setCaptureCompareValue(PWM_MOTOR_INST, compareValue, DL_TIMER_CC_0_INDEX);
-        DL_GPIO_clearPins(GPIO_MOTOR_PIN_FL1_PORT, GPIO_MOTOR_PIN_FL1_PIN);
+        temp_duty_1 = -duty1;
+        compareValue = 3199 - 3199 * (temp_duty_1/100.0);
+        DL_TimerA_setCaptureCompareValue(PWM_MOTOR_INST, compareValue, DL_TIMER_CC_0_INDEX); 
         DL_GPIO_setPins(GPIO_MOTOR_PIN_FL2_PORT, GPIO_MOTOR_PIN_FL2_PIN);
+        DL_GPIO_clearPins(GPIO_MOTOR_PIN_FL1_PORT, GPIO_MOTOR_PIN_FL1_PIN);
+       
     }
     else if(duty1 > 0)
     {
@@ -38,13 +42,14 @@ void Set_Speed(float duty1,float duty2)
         DL_GPIO_clearPins(GPIO_MOTOR_PIN_FL2_PORT, GPIO_MOTOR_PIN_FL2_PIN);
     }
 
-
     if(duty2 < 0)
     {
-        compareValue = 3199 - 3199 * (-duty2/100.0);
-        DL_TimerA_setCaptureCompareValue(PWM_MOTOR_INST, compareValue, DL_TIMER_CC_1_INDEX);
-        DL_GPIO_clearPins(GPIO_MOTOR_PIN_FR1_PORT, GPIO_MOTOR_PIN_FR1_PIN);
+        temp_duty_2 = -duty2;
+        compareValue = 3199 - 3199 * (temp_duty_2/100.0);
+        DL_TimerA_setCaptureCompareValue(PWM_MOTOR_INST, compareValue, DL_TIMER_CC_1_INDEX);  
         DL_GPIO_setPins(GPIO_MOTOR_PIN_FR2_PORT, GPIO_MOTOR_PIN_FR2_PIN);
+        DL_GPIO_clearPins(GPIO_MOTOR_PIN_FR1_PORT, GPIO_MOTOR_PIN_FR1_PIN);
+        
 
     }
     else if(duty2 > 0)

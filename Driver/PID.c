@@ -9,7 +9,7 @@ uint8_t Angle_PID_Flag =0;//角度环开启标志位
 uint8_t CV_flag=0;//视觉循迹开启标志位
 uint8_t Test_pid_flag=0;//PID调试标志位
 float K_trace = 0.0615;//减速系数
-float Speed_midset = 65;//预设直线速度
+float Speed_midset = 90;//预设直线速度
 
 /*灰度GPIO口宏定义*/
 #define Read_Huidu_IO1	 ((DL_GPIO_readPins(GPIO_TRACE_PORT,GPIO_TRACE_PIN_TRACE_0_PIN) == GPIO_TRACE_PIN_TRACE_0_PIN)?1:0)
@@ -51,9 +51,9 @@ void Velocity_PID_Init()
 /*循迹环PID*/
 void trace_hd_PID_Init()
 {
-    trace_hd.Kp = 3.35;
-    trace_hd.Kd = 0;
-    trace_hd.Ki = 0.003;
+    trace_hd.Kp = 4.5;
+    trace_hd.Kd = 20;
+    trace_hd.Ki = 0;
 }
 
 /*PID初始化*/
@@ -114,7 +114,7 @@ float Turn_hd_PID()
     
 	for(int i=0;i<7;i++)//灰度循迹个数统计
 	{
-		if((hd_sum>>i)&0x01) hd_sum++;
+		if(((~Trace_Byte)>>i)&0x01) hd_sum++;
 	}
 
     if(hd_sum <=2)//差速循迹
@@ -171,21 +171,23 @@ float Turn_hd_PID()
                 break;    
         }        
     }
-    else if(hd_sum >= 3 && hd_sum <= 5)//直角弯
+    else if(hd_sum >= 6 && hd_sum <= 8)//掉头
     {
-
+        Angle_PID_Flag = 1;
     }
     else//停车
     {
 
     }
-
+    trace_hd.error_difference = trace_hd.error - trace_hd.last_error;
     trace_hd.error_sum += trace_hd.error;//误差累加量
+    trace_hd.last_error = trace_hd.error;
     I_amplitude_limiting(5000,&trace_hd.error_sum);//误差累加量限幅
-    K_trace =  1/7.0 * pow((1-(30/Speed_midset)),0.5);//弯道减速系数
+
+    K_trace =  1/7.0 * pow((1-(45/Speed_midset)),0.5);//弯道减速系数
     MID_Speed = Speed_midset * (1 - (uint8_t)(trace_hd.error)*K_trace) * (1 + (uint8_t)(trace_hd.error)*K_trace);//基准速度变换
 
-    return trace_hd.error*trace_hd.Kp + trace_hd.error_sum*trace_hd.Ki;//PI环循迹，比例+积分
+    return trace_hd.error*trace_hd.Kp  + trace_hd.error_difference * trace_hd.Kd;//PD环循迹，比例+积分
 }
 
 void Get_TraceData()
@@ -193,6 +195,7 @@ void Get_TraceData()
     Trace_Byte = (Read_Huidu_IO1<<7) + (Read_Huidu_IO2 << 6) + (Read_Huidu_IO3 << 5) + (Read_Huidu_IO4 <<4) 
                  + (Read_Huidu_IO5 << 3) +(Read_Huidu_IO6 <<2) +(Read_Huidu_IO7 <<1) + Read_Huidu_IO8;//8路灰度循迹状态
 }
+
 //视觉循迹PID
 float Turn_cv_PID(int measure, int caclu)
 {
@@ -209,4 +212,20 @@ float Turn_cv_PID(int measure, int caclu)
     last_err = err;
     err_sum += err_difference;
     return Kp * err + Ki * err_sum + Kd * err_difference;
+}
+
+/*转向环PID控制器*/
+float Turn_imu_PID(int yaw, int caclu_yaw)
+{	
+    float Kp = 0.10;
+    float Kd = 0.20;
+    static float error ;
+    static float last_error;
+    static float error_diff;
+
+    error = yaw -caclu_yaw;
+    error_diff = error-last_error;
+    last_error = error;
+
+    return Kp * error + Kd * error_diff;
 }

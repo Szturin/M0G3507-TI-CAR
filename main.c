@@ -14,6 +14,9 @@ float MT_R = 20.0;//右轮速度初值
 uint8_t RxData;//串口接收寄存器存储变量
 uint8_t MID_Speed;
 
+uint8_t status;
+float yaw_val;
+
 //外设列表：
 //1.GPIO        LED
 //2.PWM         定时器G0,两路PWM
@@ -27,36 +30,44 @@ uint8_t MID_Speed;
 uint8_t ret = 1;
 float pitch=0,roll=0,yaw=0;
 
+char name[]="t1.txt";
+char data_HMI[]="hello world";+
+
 /*开启系统时钟中断，会导致串口工作异常或者程序卡死*/
 int main(void)
 {
     SYSCFG_DL_init();//syscfg初始化
-    Motor_Off();//初始电机关闭，等待按键控制
-    TIMER_1_Init();//定时器1初始化
-    OLED_Init();//OLED初始化
-	//board_init();//MPU6050初始化
+    Motor_On();//初始电机关闭，等待按键控制
+    //OLED_Init();//OLED初始化
     SYS_UART0_Init();//串口0初始化
     SOC_UART1_Init();//串口1初始化
     Screen_UART2_Init();//串口2初始化
     PID_Init();
-	//编码器中断使能
-    Encoder_Init();
-    Turn_hd_PID();
-
-	//MPU6050_Init();//MPU6050初始化
-    /*
+    delay_ms(10);//等待初始化稳定
+    
+    
+    board_init();//MPU6050初始化
+    MPU6050_Init();//MPU6050初始化
     while( mpu_dmp_init() )
     {
         printf("dmp error\r\n");
         delay_ms(200);
     }
-
     printf("Initialization Data Succeed \r\n");
-    */
+    
+	//编码器中断使能
+    //Encoder_Init();
+    //Turn_hd_PID();
+    delay_ms(50);//等待初始化稳定
+    TIMER_1_Init();//定时器1初始化
+    TIMER_2_Init();
+
+    
     //Set_Speed(MT_l,MT_R);
     while (1) 
     { 
-
+        //HMI_send_string(name, data_HMI);
+       // status = mpu_dmp_get_data(&pitch,&roll,&yaw);
         //注意，循迹的标号方向与程序处理索引互补
 
         /*视觉循迹*/
@@ -68,22 +79,44 @@ int main(void)
         */
 
         //OLED_ShowBinNum(1, 1, Trace_Byte,8,OLED_6X8);
+        /*
         OLED_ShowSignedNum(0, 28, MID_Speed, 3, 8);
         OLED_Update();
+*/      
+        //OLED_ShowSignedNum(0, 28, number, 3, 8);
+        //OLED_Update();
+        
+        
+        //status = mpu_dmp_get_data(&pitch,&roll,&yaw);
 
         /*
-        status = mpu_dmp_get_data(&pitch,&roll,&yaw);
         if( status == 0 )
         { 
             printf("MPU6050:%d,%d,%d\n", (int)pitch,(int)roll,(int)yaw);
         }
-        delay_ms(20);
         */
+        //delay_ms(20);
+        
         //val = DL_GPIO_readPins(GPIO_SWITCH_PORT,GPIO_SWITCH_USER_SWITCH_S2_PIN);//返回值实际为引脚组成的n位二进制数
     }
 }
 
-
+void TIMER_2_INST_IRQHandler(void)
+{
+switch (DL_TimerG_getPendingInterrupt(TIMER_2_INST)) 
+    {
+        case DL_TIMER_IIDX_ZERO://如何触发定时器置零中断事件
+            status = mpu_dmp_get_data(&pitch,&roll,&yaw);
+            //number++;
+            //status = mpu_dmp_get_data(&pitch,&roll,&yaw);
+           // printf("MPU6050:%d,%d,%d\n", (int)pitch,(int)roll,(int)yaw);
+           // status = mpu_dmp_get_data(&pitch,&roll,&yaw);
+            //status = mpu_dmp_get_data(&pitch,&roll,&yaw);
+            break;
+        default:
+            break;
+    }    
+}
 /*1ms定时器执行函数，执行系统关键计算部分*/
 void TIMER_1_INST_IRQHandler(void)
 {
@@ -107,13 +140,15 @@ void TIMER_1_INST_IRQHandler(void)
                 counter_2ms = 0;
                 Get_TraceData();//循迹状态检测
             }
+
             /*10ms执行一一次数据解算*/
             if(++counter_10ms == 10)
             {
                 counter_10ms = 0;
                 if(Angle_PID_Flag == 0)//未开启转向环（陀螺仪）
                 {
-                    printf("%f,%f,%f\r\n",40.0,Motor1_Speed,Motor2_Speed);
+                    //printf("%f,%f,%f\r\n",40.0,Motor1_Speed,Motor2_Speed);
+                    printf("MPU6050:%d,%d,%d\n", (int)pitch,(int)roll,(int)yaw);
                     Dif_Out=Turn_hd_PID();
                     MEASURE_MOTORS_SPEED();//速度测量,限制在10ms
                     /*左右速度环差速预设*/
@@ -139,12 +174,20 @@ void TIMER_1_INST_IRQHandler(void)
                     {
                         MT_L = -95;
                     }
-                    //Set_Speed(Velocity_IL,Velocity_IR);//无速度环
-                    Set_Speed(MT_L,MT_R);//有速度环
+                    Set_Speed(Velocity_IL,Velocity_IR);//无速度环
+                    //Set_Speed(MT_L,MT_R);//有速度环
+                    yaw_val = yaw;
                 }
                 else //开启转向环
                 {
-                    
+                    Velocity_IL = -Turn_imu_PID(yaw,yaw_val + 90);
+                    Velocity_IR = +Turn_imu_PID(yaw,yaw_val + 90);
+
+                    if(yaw  - yaw_val +90 <= 10 | yaw_val+90-yaw <=10)
+                    {
+                        Angle_PID_Flag = 0;
+                    }
+                    Set_Speed(Velocity_IL,Velocity_IR);
                 }
             }
             break;
