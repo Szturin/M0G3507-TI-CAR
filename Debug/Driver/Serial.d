@@ -87,7 +87,10 @@ Driver/Serial.o: ../Driver/Serial.c \
  C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/motor.h \
  C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/PID.h \
  C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/GWKJ.h \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/gw_grayscale_sensor.h
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/gw_grayscale_sensor.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/nqei.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/datatype.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/JY61P.h
 
 ti_msp_dl_config.h:
 
@@ -262,3 +265,9 @@ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/PID.h:
 C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/GWKJ.h:
 
 C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/gw_grayscale_sensor.h:
+
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/nqei.h:
+
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/datatype.h:
+
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/JY61P.h:

@@ -38,4 +38,11 @@ void UART_Screen_INST_IRQHandler(void);
 
 /*串口屏函数*/
 void HMI_send_string(char* name, char* showdata);
+void int_to_binary_string(uint32_t value, char *binary_str, int max_bits);//整数转字符串
+void float_to_string(float value, char *str, size_t size);//浮点数转字符串
+void HMI_send_number(char* name, int num);
+void HMI_send_float(char* name, float num);
+void HMI_Wave(char* name, int ch, int val);
+void HMI_Wave_Fast(char* name, int ch, int count, int* show_data);
+
 #endif

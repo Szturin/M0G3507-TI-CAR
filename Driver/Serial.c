@@ -73,6 +73,22 @@ void Screen_SendString(char *str)
     }
 }
 
+void int_to_binary_string(uint32_t value, char *binary_str, int max_bits)
+{
+    // 生成二进制字符串
+    for (int i = max_bits - 1; i >= 0; --i)
+    {
+        binary_str[i] = (value & (1U << i)) ? '1' : '0';
+    }
+    binary_str[max_bits] = '\0'; // 确保字符串以 null 结尾
+}
+
+// 将浮点数转换为字符串
+void float_to_string(float value, char *str, size_t size)
+{
+    snprintf(str, size, "%.2f", value); // 格式化为两位小数
+}
+
 void HMI_send_string(char *name, char *showdata)
 {
     char buffer[BUFFER_SIZE];
@@ -212,55 +228,6 @@ void UART_0_INST_IRQHandler(void)
     }
 }
 
-
-void UART_SOC_INST_IRQHandler(void)
-{
-    switch (DL_UART_Main_getPendingInterrupt(UART_SOC_INST))//判断中断的类型，DL_UART_Main_getPendingInterrupt(UART_0_INST)调用具有清空标志位的功能？
-    {
-        case DL_UART_MAIN_IIDX_RX://如果触发串口接收事件
-            RxData = DL_UART_Main_receiveData(UART_SOC_INST);
-            if(RxState_SOC == 0)//帧头检测
-            {
-                if(RxData == 0xFF && Soc_RxFlag == 0)//上位机的数据帧
-                {
-                    RxState_SOC=1;
-                }
-            }
-            else if(RxState_SOC == 1)//数据类型检测s
-            {
-                switch(RxData)
-                {
-                    case 0x2B ://+
-                        RxState_SOC=2;
-                        SOC_RxData_type=1;
-                        break;
-                    case 0x2D://-
-                        RxState_SOC=2;
-                        SOC_RxData_type=2;
-                        break;	
-                }
-            }
-            else if(RxState_SOC==2)//数据，接收范围限制在单字节，足够完成任务要求
-            {
-                Serial_RxPacket[0]=RxData;
-                RxState_SOC=3;
-            }
-            else if( RxState_SOC == 3)
-            {
-                if(RxData==0XFB)
-                {
-                    Soc_RxFlag=1;
-                    RxState_SOC=0;		                    
-                }
-                // DL_UART_Main_transmitData(UART_SOC_INST,(uint8_t)turn_err);
-            }
-            break;
-        default:
-            break;
-    }
-}
-
-
 void UART_Screen_INST_IRQHandler(void)
 {
     switch (DL_UART_Main_getPendingInterrupt(UART_Screen_INST))
@@ -292,3 +259,70 @@ void UART_Screen_INST_IRQHandler(void)
             break;
     }
 }
+
+/*
+void UART_SOC_INST_IRQHandler(void)
+{
+    switch (DL_UART_Main_getPendingInterrupt(UART_SOC_INST))//判断中断的类型，DL_UART_Main_getPendingInterrupt(UART_0_INST)调用具有清空标志位的功能？
+    {
+        case DL_UART_MAIN_IIDX_RX://如果触发串口接收事件
+            RxData = DL_UART_Main_receiveData(UART_SOC_INST);
+
+            if(RxState_SOC == 0)//帧头检测
+            {
+                if(RxData == 0xFF && Soc_RxFlag == 0)//上位机的数据帧
+                {
+                    RxState_SOC=1;
+                }
+                else if(RxData == 0xEF)
+                {
+                    RxState_SOC = 11;
+                }
+            }
+            else if(RxState_SOC == 1)//数据类型检测s
+            {
+                switch(RxData)
+                {
+                    case 0x2B ://+
+                        RxState_SOC=2;
+                        SOC_RxData_type=1;
+                        break;
+                    case 0x2D://-
+                        RxState_SOC=2;
+                        SOC_RxData_type=2;
+                        break;	
+                }
+            }
+            else if(RxState_SOC==2)//数据，接收范围限制在单字节，足够完成任务要求
+            {
+                Serial_RxPacket[0]=RxData;
+                RxState_SOC=3;
+            }
+            else if( RxState_SOC == 3)
+            {
+                if(RxData==0XFB)
+                {
+                    Soc_RxFlag=1;
+                    RxState_SOC=0;		                    
+                }
+                // DL_UART_Main_transmitData(UART_SOC_INST,(uint8_t)turn_err);
+            }
+            else if(RxState_SOC == 11)
+            {
+                Serial_RxPacket[0]=RxData;
+                RxState_SOC = 12;
+            }
+            else if(RxState_SOC == 12)
+            {
+                if(RxData == 0xEB)
+                {
+                    RxState_SOC = 13;
+                    Soc_RxFlag=2;
+                }
+            }
+            break;
+        default:
+            break;
+    }
+}
+*/

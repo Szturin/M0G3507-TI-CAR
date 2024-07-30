@@ -66,4 +66,5 @@ void MPU6050ReadGyro(short *gyroData);
 void MPU6050ReadAcc(short *accData);
 float MPU6050_GetTemp(void);
 uint8_t MPU6050ReadID(void);
+void I2C_MPU6050_INST_IRQHandler(void);
 #endif

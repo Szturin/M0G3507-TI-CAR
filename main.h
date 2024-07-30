@@ -9,6 +9,9 @@
 #include "PID.h"
 #include "GWKJ.h"
 #include <stdio.h>
+#include "nqei.h"
+#include "Encoder.h"
+#include "JY61P.h"
 
 void SYS_RxPro();
 void Screen_RxPro();
@@ -20,6 +23,6 @@ extern float MT_R;//右轮速度初值
 
 extern uint8_t RxData;//串口接收寄存器存储变量
 extern uint8_t MID_Speed;
+
 /*MPU6050*/
 extern uint8_t ret;
-extern float pitch,roll,yaw;

@@ -23,11 +23,14 @@ float Motor1_Speed = 0;
 float Motor2_Speed = 0;
 //外部中断读取编码器的值 
 
+/*
 void Encoder_Init()
 {
 	NVIC_EnableIRQ(Encoder_INT_IRQN);    
 }
 
+*/
+/*
 void GROUP1_IRQHandler(void){
 	if(DL_Interrupt_getStatusGroup(DL_INTERRUPT_GROUP_1,DL_INTERRUPT_GROUP1_GPIOB)){
 		uint32_t Encoder_GPIO_Int = DL_GPIO_getEnabledInterruptStatus(Encoder_PORT,Encoder_A_PIN | Encoder_B_PIN | Encoder_C_PIN | Encoder_D_PIN);
@@ -113,15 +116,17 @@ void GROUP1_IRQHandler(void){
 		}
 	}
 }
-
+*/
+/*
 //编码器1计算速度
 void Motor1_Get_Speed(void){
     short Encoder_TIM = 0;
     float Speed = 0;
     Encoder_TIM= Motor1_Encoder_Value;
-    Motor1_Encoder_Value=0;
+    
     Speed =(float)Encoder_TIM/(CC)*PI*RR;//计算速度
-    Motor1_Speed = Speed;
+    Motor1_Speed = Motor1_Encoder_Value;
+    Motor1_Encoder_Value=0;
 }
 
 //编码器2计算速度
@@ -129,9 +134,9 @@ void Motor2_Get_Speed(void){
     short Encoder_TIM = 0;
     float Speed = 0;
     Encoder_TIM= Motor2_Encoder_Value;
-    Motor2_Encoder_Value=0;
     Speed =(float)Encoder_TIM/(CC)*PI*RR;//计算速度
-    Motor2_Speed = -Speed;
+    Motor2_Speed = -Motor2_Encoder_Value;
+    Motor2_Encoder_Value=0;
 }
 
 float Motor1_Lucheng,Motor2_Lucheng;
@@ -153,3 +158,4 @@ void MEASURE_MOTORS_SPEED(void){
 		
 	}
 }
+*/

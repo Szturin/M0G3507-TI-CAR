@@ -42,6 +42,7 @@
 
 DL_TimerA_backupConfig gPWM_MOTORBackup;
 DL_TimerG_backupConfig gTIMER_2Backup;
+DL_UART_Main_backupConfig gUART_JY61PBackup;
 
 /*
  *  ======== SYSCFG_DL_init ========
@@ -60,10 +61,11 @@ SYSCONFIG_WEAK void SYSCFG_DL_init(void)
     SYSCFG_DL_UART_0_init();
     SYSCFG_DL_UART_SOC_init();
     SYSCFG_DL_UART_Screen_init();
+    SYSCFG_DL_UART_JY61P_init();
     /* Ensure backup structures have no valid state */
 	gPWM_MOTORBackup.backupRdy 	= false;
 	gTIMER_2Backup.backupRdy 	= false;
-
+	gUART_JY61PBackup.backupRdy 	= false;
 
 }
 /*
@@ -76,6 +78,7 @@ SYSCONFIG_WEAK bool SYSCFG_DL_saveConfiguration(void)
 
 	retStatus &= DL_TimerA_saveConfiguration(PWM_MOTOR_INST, &gPWM_MOTORBackup);
 	retStatus &= DL_TimerG_saveConfiguration(TIMER_2_INST, &gTIMER_2Backup);
+	retStatus &= DL_UART_Main_saveConfiguration(UART_JY61P_INST, &gUART_JY61PBackup);
 
     return retStatus;
 }
@@ -87,6 +90,7 @@ SYSCONFIG_WEAK bool SYSCFG_DL_restoreConfiguration(void)
 
 	retStatus &= DL_TimerA_restoreConfiguration(PWM_MOTOR_INST, &gPWM_MOTORBackup, false);
 	retStatus &= DL_TimerG_restoreConfiguration(TIMER_2_INST, &gTIMER_2Backup, false);
+	retStatus &= DL_UART_Main_restoreConfiguration(UART_JY61P_INST, &gUART_JY61PBackup);
 
     return retStatus;
 }
@@ -102,6 +106,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
     DL_UART_Main_reset(UART_0_INST);
     DL_UART_Main_reset(UART_SOC_INST);
     DL_UART_Main_reset(UART_Screen_INST);
+    DL_UART_Main_reset(UART_JY61P_INST);
 
     DL_GPIO_enablePower(GPIOA);
     DL_GPIO_enablePower(GPIOB);
@@ -112,6 +117,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
     DL_UART_Main_enablePower(UART_0_INST);
     DL_UART_Main_enablePower(UART_SOC_INST);
     DL_UART_Main_enablePower(UART_Screen_INST);
+    DL_UART_Main_enablePower(UART_JY61P_INST);
     delay_cycles(POWER_STARTUP_DELAY);
 }
 
@@ -149,10 +155,16 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
         GPIO_UART_Screen_IOMUX_TX, GPIO_UART_Screen_IOMUX_TX_FUNC);
     DL_GPIO_initPeripheralInputFunction(
         GPIO_UART_Screen_IOMUX_RX, GPIO_UART_Screen_IOMUX_RX_FUNC);
+    DL_GPIO_initPeripheralOutputFunction(
+        GPIO_UART_JY61P_IOMUX_TX, GPIO_UART_JY61P_IOMUX_TX_FUNC);
+    DL_GPIO_initPeripheralInputFunction(
+        GPIO_UART_JY61P_IOMUX_RX, GPIO_UART_JY61P_IOMUX_RX_FUNC);
 
     DL_GPIO_initDigitalInputFeatures(GPIO_SWITCH_USER_SWITCH_S2_IOMUX,
 		 DL_GPIO_INVERSION_DISABLE, DL_GPIO_RESISTOR_PULL_UP,
 		 DL_GPIO_HYSTERESIS_DISABLE, DL_GPIO_WAKEUP_DISABLE);
+
+    DL_GPIO_initDigitalOutput(GPIO_BEEP_PIN_1_IOMUX);
 
     DL_GPIO_initDigitalOutput(GPIO_MOTOR_PIN_FL2_IOMUX);
 
@@ -184,6 +196,14 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 
     DL_GPIO_initDigitalOutput(GPIO_GW_GPIO_SDA_IOMUX);
 
+    DL_GPIO_initDigitalInput(PORTB_RIGHT_PULSE_IOMUX);
+
+    DL_GPIO_initDigitalInput(PORTB_LEFT_PULSE_IOMUX);
+
+    DL_GPIO_initDigitalInput(PORTB_RIGHT_DIR_IOMUX);
+
+    DL_GPIO_initDigitalInput(PORTB_LEFT_DIR_IOMUX);
+
     DL_GPIO_initDigitalInput(Encoder_A_IOMUX);
 
     DL_GPIO_initDigitalInput(Encoder_B_IOMUX);
@@ -202,22 +222,24 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 		GPIO_MOTOR_PIN_FR1_PIN |
 		GPIO_GW_GPIO_SCL_PIN |
 		GPIO_GW_GPIO_SDA_PIN);
-    DL_GPIO_clearPins(GPIOB, GPIO_MOTOR_PIN_FR2_PIN |
+    DL_GPIO_clearPins(GPIOB, GPIO_BEEP_PIN_1_PIN |
+		GPIO_MOTOR_PIN_FR2_PIN |
 		GPIO_MOTOR_PIN_FSTBY_PIN);
-    DL_GPIO_enableOutput(GPIOB, GPIO_MOTOR_PIN_FR2_PIN |
+    DL_GPIO_enableOutput(GPIOB, GPIO_BEEP_PIN_1_PIN |
+		GPIO_MOTOR_PIN_FR2_PIN |
 		GPIO_MOTOR_PIN_FSTBY_PIN);
     DL_GPIO_setLowerPinsPolarity(GPIOB, DL_GPIO_PIN_4_EDGE_RISE_FALL |
 		DL_GPIO_PIN_5_EDGE_RISE_FALL |
 		DL_GPIO_PIN_6_EDGE_RISE_FALL |
-		DL_GPIO_PIN_7_EDGE_RISE_FALL);
-    DL_GPIO_clearInterruptStatus(GPIOB, Encoder_A_PIN |
-		Encoder_B_PIN |
-		Encoder_C_PIN |
-		Encoder_D_PIN);
-    DL_GPIO_enableInterrupt(GPIOB, Encoder_A_PIN |
-		Encoder_B_PIN |
-		Encoder_C_PIN |
-		Encoder_D_PIN);
+		DL_GPIO_PIN_7_EDGE_RISE_FALL |
+		DL_GPIO_PIN_13_EDGE_RISE_FALL |
+		DL_GPIO_PIN_15_EDGE_RISE_FALL);
+    DL_GPIO_setUpperPinsPolarity(GPIOB, DL_GPIO_PIN_16_EDGE_RISE_FALL |
+		DL_GPIO_PIN_17_EDGE_RISE_FALL);
+    DL_GPIO_clearInterruptStatus(GPIOB, PORTB_RIGHT_PULSE_PIN |
+		PORTB_LEFT_PULSE_PIN);
+    DL_GPIO_enableInterrupt(GPIOB, PORTB_RIGHT_PULSE_PIN |
+		PORTB_LEFT_PULSE_PIN);
 
 }
 
@@ -335,6 +357,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_TIMER_1_init(void) {
     DL_TimerG_initTimerMode(TIMER_1_INST,
         (DL_TimerG_TimerConfig *) &gTIMER_1TimerConfig);
     DL_TimerG_enableInterrupt(TIMER_1_INST , DL_TIMERG_INTERRUPT_ZERO_EVENT);
+	NVIC_SetPriority(TIMER_1_INST_INT_IRQN, 1);
     DL_TimerG_enableClock(TIMER_1_INST);
 
 
@@ -409,6 +432,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_I2C_MPU6050_init(void) {
                            DL_I2C_INTERRUPT_CONTROLLER_RX_DONE |
                            DL_I2C_INTERRUPT_CONTROLLER_TX_DONE);
 
+    NVIC_SetPriority(I2C_MPU6050_INST_INT_IRQN, 0);
 
     /* Enable module */
     DL_I2C_enableController(I2C_MPU6050_INST);
@@ -448,6 +472,8 @@ SYSCONFIG_WEAK void SYSCFG_DL_UART_0_init(void)
     /* Configure Interrupts */
     DL_UART_Main_enableInterrupt(UART_0_INST,
                                  DL_UART_MAIN_INTERRUPT_RX);
+    /* Setting the Interrupt Priority */
+    NVIC_SetPriority(UART_0_INST_INT_IRQN, 1);
 
 
     DL_UART_Main_enable(UART_0_INST);
@@ -525,5 +551,42 @@ SYSCONFIG_WEAK void SYSCFG_DL_UART_Screen_init(void)
 
 
     DL_UART_Main_enable(UART_Screen_INST);
+}
+
+static const DL_UART_Main_ClockConfig gUART_JY61PClockConfig = {
+    .clockSel    = DL_UART_MAIN_CLOCK_BUSCLK,
+    .divideRatio = DL_UART_MAIN_CLOCK_DIVIDE_RATIO_1
+};
+
+static const DL_UART_Main_Config gUART_JY61PConfig = {
+    .mode        = DL_UART_MAIN_MODE_NORMAL,
+    .direction   = DL_UART_MAIN_DIRECTION_TX_RX,
+    .flowControl = DL_UART_MAIN_FLOW_CONTROL_NONE,
+    .parity      = DL_UART_MAIN_PARITY_NONE,
+    .wordLength  = DL_UART_MAIN_WORD_LENGTH_8_BITS,
+    .stopBits    = DL_UART_MAIN_STOP_BITS_ONE
+};
+
+SYSCONFIG_WEAK void SYSCFG_DL_UART_JY61P_init(void)
+{
+    DL_UART_Main_setClockConfig(UART_JY61P_INST, (DL_UART_Main_ClockConfig *) &gUART_JY61PClockConfig);
+
+    DL_UART_Main_init(UART_JY61P_INST, (DL_UART_Main_Config *) &gUART_JY61PConfig);
+    /*
+     * Configure baud rate by setting oversampling and baud rate divisors.
+     *  Target baud rate: 115200
+     *  Actual baud rate: 115190.78
+     */
+    DL_UART_Main_setOversampling(UART_JY61P_INST, DL_UART_OVERSAMPLING_RATE_16X);
+    DL_UART_Main_setBaudRateDivisor(UART_JY61P_INST, UART_JY61P_IBRD_80_MHZ_115200_BAUD, UART_JY61P_FBRD_80_MHZ_115200_BAUD);
+
+
+    /* Configure Interrupts */
+    DL_UART_Main_enableInterrupt(UART_JY61P_INST,
+                                 DL_UART_MAIN_INTERRUPT_RX |
+                                 DL_UART_MAIN_INTERRUPT_TX);
+
+
+    DL_UART_Main_enable(UART_JY61P_INST);
 }
 
