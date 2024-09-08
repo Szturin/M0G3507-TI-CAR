@@ -3,6 +3,7 @@ extern uint8_t Trace_Byte;
 extern uint8_t Angle_PID_Flag;
 extern uint8_t Test_pid_flag;
 extern float Speed_midset;//预设直线速度
+
 float Turn_cv_PID(int measure, int caclu);
 float Turn_hd_PID();
 float Turn_hd_PID_Seven();

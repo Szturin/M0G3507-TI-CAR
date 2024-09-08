@@ -77,20 +77,15 @@ Driver/PID.o: ../Driver/PID.c \
  S:/ti/mspm0_sdk_2_00_01_00/source/ti/driverlib/m0p/dl_systick.h \
  C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Serial.h \
  C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/main.h \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Encoder.h \
  C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/OLED.h \
  C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/OLED_Data.h \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/MPU6050/bsp_mpu6050.h \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/MPU6050/board.h \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Delay.h \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/MPU6050/inv_mpu.h \
  C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Timer.h \
  C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/motor.h \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/GWKJ.h \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/gw_grayscale_sensor.h \
  C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/nqei.h \
  C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/datatype.h \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/JY61P.h
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/JY61P.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Delay.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Key.h
 
 C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/PID.h:
 
@@ -244,30 +239,20 @@ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Serial.h:
 
 C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/main.h:
 
-C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Encoder.h:
-
 C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/OLED.h:
 
 C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/OLED_Data.h:
 
-C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/MPU6050/bsp_mpu6050.h:
-
-C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/MPU6050/board.h:
-
-C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Delay.h:
-
-C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/MPU6050/inv_mpu.h:
-
 C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Timer.h:
 
 C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/motor.h:
-
-C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/GWKJ.h:
-
-C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/gw_grayscale_sensor.h:
 
 C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/nqei.h:
 
 C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/datatype.h:
 
 C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/JY61P.h:
+
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Delay.h:
+
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Key.h:

@@ -59,8 +59,8 @@ void Velocity_L_PID_Init()
 /*循迹环PID*/
 void trace_hd_PID_Init()
 {
-    trace_hd.Kp = 5.2;
-    trace_hd.Kd = 23;
+    trace_hd.Kp = -1.75;
+    trace_hd.Kd = -0.65;
     trace_hd.Ki = 0;
 }
 
@@ -135,8 +135,6 @@ float Velocity_PID_R(float velocity,float velocity_calcu)
 	static float filt_velocity=0;
 	static float last_filt_velocity=0;
 	*/
-
-    
     if(Test_pid_flag==1)//调试模式
     {
         velocity_calcu = Test_Ks/10.0;
@@ -148,9 +146,6 @@ float Velocity_PID_R(float velocity,float velocity_calcu)
     {
         Velocity_PID_Init();
     }
-
-    
-
 /*
     if(Test_pid_flag==1)//调试模式
     {
@@ -193,58 +188,80 @@ float Turn_hd_PID()
     {
         switch(Trace_Byte)
         {
-            //直行
-            case 0B11100111: 
-                trace_hd.error=0;
+            case 0xE7: // 1110 0111
+            case 0xC3: // 1100 0011
+                trace_hd.error = 0;
                 break;
-            //左转
-            case 0B11101111:
-                trace_hd.error=1;
+            case 0x00: // 0000 0000
+            case 0x0F: // 0000 1111
+            case 0x07: // 0000 0111
+                trace_hd.error = -9;
                 break;
-            case 0B11001111:
-                trace_hd.error=2;
+            case 0xF0: // 1111 0000
+            case 0xE0: // 1110 0000
+                trace_hd.error = 9;
                 break;
-            case 0B11011111:
-                trace_hd.error=3;
+            case 0xE3: // 1110 0011
+            case 0xF7: // 1111 0111
+                trace_hd.error = 2;
                 break;
-            case 0B10011111:
-                trace_hd.error=4;
+            case 0xC1: // 1100 0001
+                trace_hd.error = 1;
                 break;
-            case 0B10111111:
-                trace_hd.error=6;
+            case 0xF3: // 1111 0011
+                trace_hd.error = 4;
                 break;
-            case 0B00111111:
-                trace_hd.error=8;
+            case 0xF1: // 1111 0001
+            case 0xFB: // 1111 1011
+                trace_hd.error = 6;
                 break;
-            case 0B01111111:
-                trace_hd.error=10;
+            case 0xF9: // 1111 1001
+            case 0xFD: // 1111 1101
+                trace_hd.error = 8;
                 break;
-            //右转
-            case 0B11110111:
-                trace_hd.error=-1;
+            case 0xF8: // 1111 1000
+                trace_hd.error = 10;
                 break;
-            case 0B11110011:
-                trace_hd.error=-2;
+            case 0xFC: // 1111 1100
+                trace_hd.error = 12;
                 break;
-            case 0B11111011:
-                trace_hd.error=-3;
+            case 0xFE: // 1111 1110
+                trace_hd.error = 14;
                 break;
-            case 0B11111001:
-                trace_hd.error=-4;
+            case 0x87: // 1000 0111
+                trace_hd.error = -2;
                 break;
-            case 0B11111101:
-                trace_hd.error=-6;
+            case 0xC7: // 1100 0111
+                trace_hd.error = -1;
                 break;
-            case 0B11111100:
-                trace_hd.error=-8;
+            case 0xEF: // 1110 1111
+                trace_hd.error = -2;
                 break;
-            case 0B11111110:
-                trace_hd.error=-10;
-                break; 
-            case 0B11111111:
-                trace_hd.error=0;
+            case 0xCF: // 1100 1111
+                trace_hd.error = -4;
+                break;
+            case 0x8F: // 1000 1111
+            case 0xDF: // 1101 1111
+                trace_hd.error = -6;
+                break;
+            case 0x9F: // 1001 1111
+            case 0xBF: // 1011 1111
+                trace_hd.error = -8;
+                break;
+            case 0x1F: // 0001 1111
+                trace_hd.error = -10;
+                break;
+            case 0x3F: // 0011 1111
+                trace_hd.error = -12;
+                break;
+            case 0x7F: // 0111 1111
+                trace_hd.error = -14;
+                break;
+            case 0xFF: // 1111 1111
+                trace_hd.error = trace_hd.last_error > 0 ? 16 : -16;
+                break;
             default:
-                trace_hd.error=0;
+                trace_hd.error = 0;
                 break;
         }        
     }
@@ -263,7 +280,7 @@ float Turn_hd_PID()
     I_amplitude_limiting(1000,&trace_hd.error_sum);//误差累加量限幅
 
 
-    K_trace =  1/7.0 * pow((1-(20/Speed_midset)),0.5);//弯道减速系数
+    K_trace =  1/16.0 * pow((1-(20/Speed_midset)),0.5);//弯道减速系数
     MID_Speed = Speed_midset * (1 - (uint8_t)(trace_hd.error)*K_trace) * (1 + (uint8_t)(trace_hd.error)*K_trace);//基准速度变换
 
     return trace_hd.error*trace_hd.Kp  + trace_hd.error_difference * trace_hd.Kd;//PD环循迹，比例+积分

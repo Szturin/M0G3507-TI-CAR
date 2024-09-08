@@ -1,7 +1,7 @@
 # FIXED
 
-MPU6050/board.o: ../MPU6050/board.c \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/MPU6050/board.h \
+Driver/Key.o: ../Driver/Key.c \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Key.h \
  ti_msp_dl_config.h \
  S:/ti/mspm0_sdk_2_00_01_00/source/ti/devices/msp/msp.h \
  S:/ti/mspm0_sdk_2_00_01_00/source/ti/devices/DeviceFamily.h \
@@ -74,10 +74,9 @@ MPU6050/board.o: ../MPU6050/board.c \
  S:/ti/mspm0_sdk_2_00_01_00/source/ti/driverlib/dl_vref.h \
  S:/ti/mspm0_sdk_2_00_01_00/source/ti/driverlib/dl_wwdt.h \
  S:/ti/mspm0_sdk_2_00_01_00/source/ti/driverlib/m0p/dl_interrupt.h \
- S:/ti/mspm0_sdk_2_00_01_00/source/ti/driverlib/m0p/dl_systick.h \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Delay.h
+ S:/ti/mspm0_sdk_2_00_01_00/source/ti/driverlib/m0p/dl_systick.h
 
-C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/MPU6050/board.h:
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Key.h:
 
 ti_msp_dl_config.h:
 
@@ -224,5 +223,3 @@ S:/ti/mspm0_sdk_2_00_01_00/source/ti/driverlib/dl_wwdt.h:
 S:/ti/mspm0_sdk_2_00_01_00/source/ti/driverlib/m0p/dl_interrupt.h:
 
 S:/ti/mspm0_sdk_2_00_01_00/source/ti/driverlib/m0p/dl_systick.h:
-
-C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Delay.h:

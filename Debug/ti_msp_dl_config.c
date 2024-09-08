@@ -57,7 +57,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_init(void)
     SYSCFG_DL_PWM_MOTOR_init();
     SYSCFG_DL_TIMER_1_init();
     SYSCFG_DL_TIMER_2_init();
-    SYSCFG_DL_I2C_MPU6050_init();
+    SYSCFG_DL_I2C_OLED_init();
     SYSCFG_DL_UART_0_init();
     SYSCFG_DL_UART_SOC_init();
     SYSCFG_DL_UART_Screen_init();
@@ -102,7 +102,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
     DL_TimerA_reset(PWM_MOTOR_INST);
     DL_TimerG_reset(TIMER_1_INST);
     DL_TimerG_reset(TIMER_2_INST);
-    DL_I2C_reset(I2C_MPU6050_INST);
+    DL_I2C_reset(I2C_OLED_INST);
     DL_UART_Main_reset(UART_0_INST);
     DL_UART_Main_reset(UART_SOC_INST);
     DL_UART_Main_reset(UART_Screen_INST);
@@ -113,7 +113,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
     DL_TimerA_enablePower(PWM_MOTOR_INST);
     DL_TimerG_enablePower(TIMER_1_INST);
     DL_TimerG_enablePower(TIMER_2_INST);
-    DL_I2C_enablePower(I2C_MPU6050_INST);
+    DL_I2C_enablePower(I2C_OLED_INST);
     DL_UART_Main_enablePower(UART_0_INST);
     DL_UART_Main_enablePower(UART_SOC_INST);
     DL_UART_Main_enablePower(UART_Screen_INST);
@@ -132,16 +132,16 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
     DL_GPIO_initPeripheralOutputFunction(GPIO_PWM_MOTOR_C1_IOMUX,GPIO_PWM_MOTOR_C1_IOMUX_FUNC);
     DL_GPIO_enableOutput(GPIO_PWM_MOTOR_C1_PORT, GPIO_PWM_MOTOR_C1_PIN);
 
-    DL_GPIO_initPeripheralInputFunctionFeatures(GPIO_I2C_MPU6050_IOMUX_SDA,
-        GPIO_I2C_MPU6050_IOMUX_SDA_FUNC, DL_GPIO_INVERSION_DISABLE,
+    DL_GPIO_initPeripheralInputFunctionFeatures(GPIO_I2C_OLED_IOMUX_SDA,
+        GPIO_I2C_OLED_IOMUX_SDA_FUNC, DL_GPIO_INVERSION_DISABLE,
         DL_GPIO_RESISTOR_NONE, DL_GPIO_HYSTERESIS_DISABLE,
         DL_GPIO_WAKEUP_DISABLE);
-    DL_GPIO_initPeripheralInputFunctionFeatures(GPIO_I2C_MPU6050_IOMUX_SCL,
-        GPIO_I2C_MPU6050_IOMUX_SCL_FUNC, DL_GPIO_INVERSION_DISABLE,
+    DL_GPIO_initPeripheralInputFunctionFeatures(GPIO_I2C_OLED_IOMUX_SCL,
+        GPIO_I2C_OLED_IOMUX_SCL_FUNC, DL_GPIO_INVERSION_DISABLE,
         DL_GPIO_RESISTOR_NONE, DL_GPIO_HYSTERESIS_DISABLE,
         DL_GPIO_WAKEUP_DISABLE);
-    DL_GPIO_enableHiZ(GPIO_I2C_MPU6050_IOMUX_SDA);
-    DL_GPIO_enableHiZ(GPIO_I2C_MPU6050_IOMUX_SCL);
+    DL_GPIO_enableHiZ(GPIO_I2C_OLED_IOMUX_SDA);
+    DL_GPIO_enableHiZ(GPIO_I2C_OLED_IOMUX_SCL);
 
     DL_GPIO_initPeripheralOutputFunction(
         GPIO_UART_0_IOMUX_TX, GPIO_UART_0_IOMUX_TX_FUNC);
@@ -160,11 +160,19 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
     DL_GPIO_initPeripheralInputFunction(
         GPIO_UART_JY61P_IOMUX_RX, GPIO_UART_JY61P_IOMUX_RX_FUNC);
 
-    DL_GPIO_initDigitalInputFeatures(GPIO_SWITCH_USER_SWITCH_S2_IOMUX,
+    DL_GPIO_initDigitalOutput(GPIO_BEEP_PIN_1_IOMUX);
+
+    DL_GPIO_initDigitalInputFeatures(GPIO_SWITCH_USER_SWITCH_1_IOMUX,
 		 DL_GPIO_INVERSION_DISABLE, DL_GPIO_RESISTOR_PULL_UP,
 		 DL_GPIO_HYSTERESIS_DISABLE, DL_GPIO_WAKEUP_DISABLE);
 
-    DL_GPIO_initDigitalOutput(GPIO_BEEP_PIN_1_IOMUX);
+    DL_GPIO_initDigitalInputFeatures(GPIO_SWITCH_USER_SWITCH_3_IOMUX,
+		 DL_GPIO_INVERSION_DISABLE, DL_GPIO_RESISTOR_PULL_UP,
+		 DL_GPIO_HYSTERESIS_DISABLE, DL_GPIO_WAKEUP_DISABLE);
+
+    DL_GPIO_initDigitalInputFeatures(GPIO_SWITCH_USER_SWITCH_2_IOMUX,
+		 DL_GPIO_INVERSION_DISABLE, DL_GPIO_RESISTOR_PULL_UP,
+		 DL_GPIO_HYSTERESIS_DISABLE, DL_GPIO_WAKEUP_DISABLE);
 
     DL_GPIO_initDigitalOutput(GPIO_MOTOR_PIN_FL2_IOMUX);
 
@@ -403,39 +411,39 @@ SYSCONFIG_WEAK void SYSCFG_DL_TIMER_2_init(void) {
 }
 
 
-static const DL_I2C_ClockConfig gI2C_MPU6050ClockConfig = {
+static const DL_I2C_ClockConfig gI2C_OLEDClockConfig = {
     .clockSel = DL_I2C_CLOCK_BUSCLK,
     .divideRatio = DL_I2C_CLOCK_DIVIDE_1,
 };
 
-SYSCONFIG_WEAK void SYSCFG_DL_I2C_MPU6050_init(void) {
+SYSCONFIG_WEAK void SYSCFG_DL_I2C_OLED_init(void) {
 
-    DL_I2C_setClockConfig(I2C_MPU6050_INST,
-        (DL_I2C_ClockConfig *) &gI2C_MPU6050ClockConfig);
-    DL_I2C_setAnalogGlitchFilterPulseWidth(I2C_MPU6050_INST,
+    DL_I2C_setClockConfig(I2C_OLED_INST,
+        (DL_I2C_ClockConfig *) &gI2C_OLEDClockConfig);
+    DL_I2C_setAnalogGlitchFilterPulseWidth(I2C_OLED_INST,
         DL_I2C_ANALOG_GLITCH_FILTER_WIDTH_50NS);
-    DL_I2C_enableAnalogGlitchFilter(I2C_MPU6050_INST);
+    DL_I2C_enableAnalogGlitchFilter(I2C_OLED_INST);
 
     /* Configure Controller Mode */
-    DL_I2C_resetControllerTransfer(I2C_MPU6050_INST);
-    /* Set frequency to 100000 Hz*/
-    DL_I2C_setTimerPeriod(I2C_MPU6050_INST, 39);
-    DL_I2C_setControllerTXFIFOThreshold(I2C_MPU6050_INST, DL_I2C_TX_FIFO_LEVEL_EMPTY);
-    DL_I2C_setControllerRXFIFOThreshold(I2C_MPU6050_INST, DL_I2C_RX_FIFO_LEVEL_BYTES_1);
-    DL_I2C_enableControllerClockStretching(I2C_MPU6050_INST);
+    DL_I2C_resetControllerTransfer(I2C_OLED_INST);
+    /* Set frequency to 400000 Hz*/
+    DL_I2C_setTimerPeriod(I2C_OLED_INST, 9);
+    DL_I2C_setControllerTXFIFOThreshold(I2C_OLED_INST, DL_I2C_TX_FIFO_LEVEL_EMPTY);
+    DL_I2C_setControllerRXFIFOThreshold(I2C_OLED_INST, DL_I2C_RX_FIFO_LEVEL_BYTES_1);
+    DL_I2C_enableControllerClockStretching(I2C_OLED_INST);
 
     /* Configure Interrupts */
-    DL_I2C_enableInterrupt(I2C_MPU6050_INST,
+    DL_I2C_enableInterrupt(I2C_OLED_INST,
                            DL_I2C_INTERRUPT_CONTROLLER_ARBITRATION_LOST |
                            DL_I2C_INTERRUPT_CONTROLLER_NACK |
                            DL_I2C_INTERRUPT_CONTROLLER_RXFIFO_TRIGGER |
                            DL_I2C_INTERRUPT_CONTROLLER_RX_DONE |
                            DL_I2C_INTERRUPT_CONTROLLER_TX_DONE);
 
-    NVIC_SetPriority(I2C_MPU6050_INST_INT_IRQN, 0);
+    NVIC_SetPriority(I2C_OLED_INST_INT_IRQN, 0);
 
     /* Enable module */
-    DL_I2C_enableController(I2C_MPU6050_INST);
+    DL_I2C_enableController(I2C_OLED_INST);
 
 
 }

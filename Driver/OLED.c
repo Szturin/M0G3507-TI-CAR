@@ -90,7 +90,7 @@ uint8_t OLED_DisplayBuf[8][128];
 
 int I2C_WriteByte(uint8_t addr,uint8_t data)
 {
-/*
+
   uint8_t buff[2] = {0};
   buff[0] = addr;
   buff[1] = data;
@@ -114,8 +114,8 @@ int I2C_WriteByte(uint8_t addr,uint8_t data)
           __BKPT(0);
       }
     return 0;
-    */
 }
+
 
 /**
   * 函    数：OLED写命令

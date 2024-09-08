@@ -13,10 +13,8 @@ ORDERED_OBJS += \
 "./main.o" \
 "./ti_msp_dl_config.o" \
 "./startup_mspm0g350x_ticlang.o" \
-"./Driver/Encoder.o" \
-"./Driver/GWKJ.o" \
 "./Driver/JY61P.o" \
-"./Driver/Motor_ctrl.o" \
+"./Driver/Key.o" \
 "./Driver/OLED.o" \
 "./Driver/OLED_Data.o" \
 "./Driver/PID.o" \
@@ -24,10 +22,6 @@ ORDERED_OBJS += \
 "./Driver/Serial.o" \
 "./Driver/motor.o" \
 "./Driver/nqei.o" \
-"./MPU6050/board.o" \
-"./MPU6050/bsp_mpu6050.o" \
-"./MPU6050/inv_mpu.o" \
-"./MPU6050/inv_mpu_dmp_motion_driver.o" \
 "./System/Delay.o" \
 "./System/Timer.o" \
 $(GEN_CMDS__FLAG) \
@@ -43,11 +37,9 @@ RMDIR := RMDIR /S/Q
 -include sources.mk
 -include subdir_vars.mk
 -include Driver/subdir_vars.mk
--include MPU6050/subdir_vars.mk
 -include System/subdir_vars.mk
 -include subdir_rules.mk
 -include Driver/subdir_rules.mk
--include MPU6050/subdir_rules.mk
 -include System/subdir_rules.mk
 -include objects.mk
 
@@ -179,8 +171,8 @@ M0G3507-TI-CAR-main.txt: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(BIN_OUTPUTS__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.o" "ti_msp_dl_config.o" "startup_mspm0g350x_ticlang.o" "Driver\Encoder.o" "Driver\GWKJ.o" "Driver\JY61P.o" "Driver\Motor_ctrl.o" "Driver\OLED.o" "Driver\OLED_Data.o" "Driver\PID.o" "Driver\PWM.o" "Driver\Serial.o" "Driver\motor.o" "Driver\nqei.o" "MPU6050\board.o" "MPU6050\bsp_mpu6050.o" "MPU6050\inv_mpu.o" "MPU6050\inv_mpu_dmp_motion_driver.o" "System\Delay.o" "System\Timer.o" 
-	-$(RM) "main.d" "ti_msp_dl_config.d" "startup_mspm0g350x_ticlang.d" "Driver\Encoder.d" "Driver\GWKJ.d" "Driver\JY61P.d" "Driver\Motor_ctrl.d" "Driver\OLED.d" "Driver\OLED_Data.d" "Driver\PID.d" "Driver\PWM.d" "Driver\Serial.d" "Driver\motor.d" "Driver\nqei.d" "MPU6050\board.d" "MPU6050\bsp_mpu6050.d" "MPU6050\inv_mpu.d" "MPU6050\inv_mpu_dmp_motion_driver.d" "System\Delay.d" "System\Timer.d" 
+	-$(RM) "main.o" "ti_msp_dl_config.o" "startup_mspm0g350x_ticlang.o" "Driver\JY61P.o" "Driver\Key.o" "Driver\OLED.o" "Driver\OLED_Data.o" "Driver\PID.o" "Driver\PWM.o" "Driver\Serial.o" "Driver\motor.o" "Driver\nqei.o" "System\Delay.o" "System\Timer.o" 
+	-$(RM) "main.d" "ti_msp_dl_config.d" "startup_mspm0g350x_ticlang.d" "Driver\JY61P.d" "Driver\Key.d" "Driver\OLED.d" "Driver\OLED_Data.d" "Driver\PID.d" "Driver\PWM.d" "Driver\Serial.d" "Driver\motor.d" "Driver\nqei.d" "System\Delay.d" "System\Timer.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

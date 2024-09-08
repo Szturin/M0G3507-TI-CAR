@@ -126,6 +126,5 @@ GEN_OPTS__QUOTED :=
 SUBDIRS := \
 . \
 Driver \
-MPU6050 \
 System \
 

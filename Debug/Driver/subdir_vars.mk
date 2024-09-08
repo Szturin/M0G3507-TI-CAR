@@ -6,10 +6,8 @@ SHELL = cmd.exe
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Driver/Encoder.c \
-../Driver/GWKJ.c \
 ../Driver/JY61P.c \
-../Driver/Motor_ctrl.c \
+../Driver/Key.c \
 ../Driver/OLED.c \
 ../Driver/OLED_Data.c \
 ../Driver/PID.c \
@@ -19,10 +17,8 @@ C_SRCS += \
 ../Driver/nqei.c 
 
 C_DEPS += \
-./Driver/Encoder.d \
-./Driver/GWKJ.d \
 ./Driver/JY61P.d \
-./Driver/Motor_ctrl.d \
+./Driver/Key.d \
 ./Driver/OLED.d \
 ./Driver/OLED_Data.d \
 ./Driver/PID.d \
@@ -32,10 +28,8 @@ C_DEPS += \
 ./Driver/nqei.d 
 
 OBJS += \
-./Driver/Encoder.o \
-./Driver/GWKJ.o \
 ./Driver/JY61P.o \
-./Driver/Motor_ctrl.o \
+./Driver/Key.o \
 ./Driver/OLED.o \
 ./Driver/OLED_Data.o \
 ./Driver/PID.o \
@@ -45,10 +39,8 @@ OBJS += \
 ./Driver/nqei.o 
 
 OBJS__QUOTED += \
-"Driver\Encoder.o" \
-"Driver\GWKJ.o" \
 "Driver\JY61P.o" \
-"Driver\Motor_ctrl.o" \
+"Driver\Key.o" \
 "Driver\OLED.o" \
 "Driver\OLED_Data.o" \
 "Driver\PID.o" \
@@ -58,10 +50,8 @@ OBJS__QUOTED += \
 "Driver\nqei.o" 
 
 C_DEPS__QUOTED += \
-"Driver\Encoder.d" \
-"Driver\GWKJ.d" \
 "Driver\JY61P.d" \
-"Driver\Motor_ctrl.d" \
+"Driver\Key.d" \
 "Driver\OLED.d" \
 "Driver\OLED_Data.d" \
 "Driver\PID.d" \
@@ -71,10 +61,8 @@ C_DEPS__QUOTED += \
 "Driver\nqei.d" 
 
 C_SRCS__QUOTED += \
-"../Driver/Encoder.c" \
-"../Driver/GWKJ.c" \
 "../Driver/JY61P.c" \
-"../Driver/Motor_ctrl.c" \
+"../Driver/Key.c" \
 "../Driver/OLED.c" \
 "../Driver/OLED_Data.c" \
 "../Driver/PID.c" \
