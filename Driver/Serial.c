@@ -1,11 +1,10 @@
-#include "stdio.h"
-#include "string.h"
-#include "ti_msp_dl_config.h"
-#include "main.h"
+#include "Serial.h"
 #define BUFFER_SIZE 256  // 定义缓冲区大小
 
 uint8_t Serial_RxPacket[100];
 /*PID调试*/
+
+
 float Test_Kp;//比例
 float Test_Ki;//积分
 float Test_Kd;//微分

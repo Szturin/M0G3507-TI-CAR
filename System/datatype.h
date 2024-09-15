@@ -106,6 +106,8 @@ typedef struct
 	
 }encoder;
 
+extern encoder NEncoder;
+
 #endif
 
 

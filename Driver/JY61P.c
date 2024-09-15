@@ -1,6 +1,4 @@
-#include "ti_msp_dl_config.h"
-#include "Delay.h"
-
+#include "JY61P.h"
 
 // 定义接收变量
 uint8_t RollL, RollH, PitchL, PitchH, YawL, YawH, VL, VH, SUM;
@@ -13,8 +11,6 @@ float Pitch,Roll,Yaw;
 uint8_t RxState_JY = WAIT_HEADER1;
 uint8_t receivedData[9];
 uint8_t dataIndex = 0;
-
-
 
 //发送置偏航角置零命令
 void Serial_JY61P_Zero_Yaw(void){

@@ -1,6 +1,8 @@
 # FIXED
 
 System/Timer.o: ../System/Timer.c \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Timer.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/bsp_system.h \
  ti_msp_dl_config.h \
  S:/ti/mspm0_sdk_2_00_01_00/source/ti/devices/msp/msp.h \
  S:/ti/mspm0_sdk_2_00_01_00/source/ti/devices/DeviceFamily.h \
@@ -75,17 +77,24 @@ System/Timer.o: ../System/Timer.c \
  S:/ti/mspm0_sdk_2_00_01_00/source/ti/driverlib/m0p/dl_interrupt.h \
  S:/ti/mspm0_sdk_2_00_01_00/source/ti/driverlib/m0p/dl_systick.h \
  C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/main.h \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/OLED.h \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/OLED_Data.h \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Serial.h \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Timer.h \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/motor.h \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/PID.h \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/nqei.h \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/datatype.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/datatype.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/user.h \
  C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/JY61P.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Key.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/motor.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/nqei.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/OLED_Data.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/OLED.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/PID.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/PWM.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Serial.h \
  C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Delay.h \
- C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Key.h
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Path.h \
+ C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Process.h
+
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Timer.h:
+
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/bsp_system.h:
 
 ti_msp_dl_config.h:
 
@@ -235,24 +244,30 @@ S:/ti/mspm0_sdk_2_00_01_00/source/ti/driverlib/m0p/dl_systick.h:
 
 C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/main.h:
 
-C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/OLED.h:
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/datatype.h:
 
-C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/OLED_Data.h:
-
-C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Serial.h:
-
-C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Timer.h:
-
-C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/motor.h:
-
-C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/PID.h:
-
-C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/nqei.h:
-
-C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/datatype.h:
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/user.h:
 
 C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/JY61P.h:
 
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Key.h:
+
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/motor.h:
+
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/nqei.h:
+
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/OLED_Data.h:
+
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/OLED.h:
+
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/PID.h:
+
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/PWM.h:
+
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Serial.h:
+
 C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Delay.h:
 
-C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/Driver/Key.h:
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Path.h:
+
+C:/Users/123/workspace_ccstheia/M0G3507-TI-CAR-main/System/Process.h:

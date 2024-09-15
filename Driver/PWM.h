@@ -1,5 +1,6 @@
 #ifndef __PWM_H__
 #define __PWM_H__
+#include "bsp_system.h"
 /*
 void Motor_PWM_Start();
 void Set_PWM_Duty(float Duty, uint8_t channel);

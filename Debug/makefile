@@ -23,6 +23,8 @@ ORDERED_OBJS += \
 "./Driver/motor.o" \
 "./Driver/nqei.o" \
 "./System/Delay.o" \
+"./System/Path.o" \
+"./System/Process.o" \
 "./System/Timer.o" \
 $(GEN_CMDS__FLAG) \
 -Wl,-ldevice.cmd.genlibs \
@@ -171,8 +173,8 @@ M0G3507-TI-CAR-main.txt: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(BIN_OUTPUTS__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.o" "ti_msp_dl_config.o" "startup_mspm0g350x_ticlang.o" "Driver\JY61P.o" "Driver\Key.o" "Driver\OLED.o" "Driver\OLED_Data.o" "Driver\PID.o" "Driver\PWM.o" "Driver\Serial.o" "Driver\motor.o" "Driver\nqei.o" "System\Delay.o" "System\Timer.o" 
-	-$(RM) "main.d" "ti_msp_dl_config.d" "startup_mspm0g350x_ticlang.d" "Driver\JY61P.d" "Driver\Key.d" "Driver\OLED.d" "Driver\OLED_Data.d" "Driver\PID.d" "Driver\PWM.d" "Driver\Serial.d" "Driver\motor.d" "Driver\nqei.d" "System\Delay.d" "System\Timer.d" 
+	-$(RM) "main.o" "ti_msp_dl_config.o" "startup_mspm0g350x_ticlang.o" "Driver\JY61P.o" "Driver\Key.o" "Driver\OLED.o" "Driver\OLED_Data.o" "Driver\PID.o" "Driver\PWM.o" "Driver\Serial.o" "Driver\motor.o" "Driver\nqei.o" "System\Delay.o" "System\Path.o" "System\Process.o" "System\Timer.o" 
+	-$(RM) "main.d" "ti_msp_dl_config.d" "startup_mspm0g350x_ticlang.d" "Driver\JY61P.d" "Driver\Key.d" "Driver\OLED.d" "Driver\OLED_Data.d" "Driver\PID.d" "Driver\PWM.d" "Driver\Serial.d" "Driver\motor.d" "Driver\nqei.d" "System\Delay.d" "System\Path.d" "System\Process.d" "System\Timer.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

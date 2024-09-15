@@ -233,33 +233,38 @@ extern "C" {
 #define GPIO_MOTOR_PIN_FSTBY_PORT                                        (GPIOB)
 #define GPIO_MOTOR_PIN_FSTBY_PIN                                (DL_GPIO_PIN_19)
 #define GPIO_MOTOR_PIN_FSTBY_IOMUX                               (IOMUX_PINCM45)
-/* Port definition for Pin Group GPIO_TRACE */
-#define GPIO_TRACE_PORT                                                  (GPIOA)
-
-/* Defines for PIN_TRACE_0: GPIOA.31 with pinCMx 6 on package pin 39 */
-#define GPIO_TRACE_PIN_TRACE_0_PIN                              (DL_GPIO_PIN_31)
-#define GPIO_TRACE_PIN_TRACE_0_IOMUX                              (IOMUX_PINCM6)
-/* Defines for PIN_TRACE_1: GPIOA.18 with pinCMx 40 on package pin 11 */
-#define GPIO_TRACE_PIN_TRACE_1_PIN                              (DL_GPIO_PIN_18)
-#define GPIO_TRACE_PIN_TRACE_1_IOMUX                             (IOMUX_PINCM40)
-/* Defines for PIN_TRACE_2: GPIOA.12 with pinCMx 34 on package pin 5 */
-#define GPIO_TRACE_PIN_TRACE_2_PIN                              (DL_GPIO_PIN_12)
-#define GPIO_TRACE_PIN_TRACE_2_IOMUX                             (IOMUX_PINCM34)
-/* Defines for PIN_TRACE_3: GPIOA.13 with pinCMx 35 on package pin 6 */
-#define GPIO_TRACE_PIN_TRACE_3_PIN                              (DL_GPIO_PIN_13)
-#define GPIO_TRACE_PIN_TRACE_3_IOMUX                             (IOMUX_PINCM35)
-/* Defines for PIN_TRACE_4: GPIOA.14 with pinCMx 36 on package pin 7 */
-#define GPIO_TRACE_PIN_TRACE_4_PIN                              (DL_GPIO_PIN_14)
-#define GPIO_TRACE_PIN_TRACE_4_IOMUX                             (IOMUX_PINCM36)
-/* Defines for PIN_TRACE_5: GPIOA.15 with pinCMx 37 on package pin 8 */
-#define GPIO_TRACE_PIN_TRACE_5_PIN                              (DL_GPIO_PIN_15)
-#define GPIO_TRACE_PIN_TRACE_5_IOMUX                             (IOMUX_PINCM37)
-/* Defines for PIN_TRACE_6: GPIOA.16 with pinCMx 38 on package pin 9 */
-#define GPIO_TRACE_PIN_TRACE_6_PIN                              (DL_GPIO_PIN_16)
-#define GPIO_TRACE_PIN_TRACE_6_IOMUX                             (IOMUX_PINCM38)
-/* Defines for PIN_TRACE_7: GPIOA.17 with pinCMx 39 on package pin 10 */
-#define GPIO_TRACE_PIN_TRACE_7_PIN                              (DL_GPIO_PIN_17)
-#define GPIO_TRACE_PIN_TRACE_7_IOMUX                             (IOMUX_PINCM39)
+/* Defines for PIN_TRACE_0: GPIOB.13 with pinCMx 30 on package pin 1 */
+#define GPIO_TRACE_PIN_TRACE_0_PORT                                      (GPIOB)
+#define GPIO_TRACE_PIN_TRACE_0_PIN                              (DL_GPIO_PIN_13)
+#define GPIO_TRACE_PIN_TRACE_0_IOMUX                             (IOMUX_PINCM30)
+/* Defines for PIN_TRACE_1: GPIOB.15 with pinCMx 32 on package pin 3 */
+#define GPIO_TRACE_PIN_TRACE_1_PORT                                      (GPIOB)
+#define GPIO_TRACE_PIN_TRACE_1_PIN                              (DL_GPIO_PIN_15)
+#define GPIO_TRACE_PIN_TRACE_1_IOMUX                             (IOMUX_PINCM32)
+/* Defines for PIN_TRACE_2: GPIOB.16 with pinCMx 33 on package pin 4 */
+#define GPIO_TRACE_PIN_TRACE_2_PORT                                      (GPIOB)
+#define GPIO_TRACE_PIN_TRACE_2_PIN                              (DL_GPIO_PIN_16)
+#define GPIO_TRACE_PIN_TRACE_2_IOMUX                             (IOMUX_PINCM33)
+/* Defines for PIN_TRACE_3: GPIOA.12 with pinCMx 34 on package pin 5 */
+#define GPIO_TRACE_PIN_TRACE_3_PORT                                      (GPIOA)
+#define GPIO_TRACE_PIN_TRACE_3_PIN                              (DL_GPIO_PIN_12)
+#define GPIO_TRACE_PIN_TRACE_3_IOMUX                             (IOMUX_PINCM34)
+/* Defines for PIN_TRACE_4: GPIOA.13 with pinCMx 35 on package pin 6 */
+#define GPIO_TRACE_PIN_TRACE_4_PORT                                      (GPIOA)
+#define GPIO_TRACE_PIN_TRACE_4_PIN                              (DL_GPIO_PIN_13)
+#define GPIO_TRACE_PIN_TRACE_4_IOMUX                             (IOMUX_PINCM35)
+/* Defines for PIN_TRACE_5: GPIOA.14 with pinCMx 36 on package pin 7 */
+#define GPIO_TRACE_PIN_TRACE_5_PORT                                      (GPIOA)
+#define GPIO_TRACE_PIN_TRACE_5_PIN                              (DL_GPIO_PIN_14)
+#define GPIO_TRACE_PIN_TRACE_5_IOMUX                             (IOMUX_PINCM36)
+/* Defines for PIN_TRACE_6: GPIOA.15 with pinCMx 37 on package pin 8 */
+#define GPIO_TRACE_PIN_TRACE_6_PORT                                      (GPIOA)
+#define GPIO_TRACE_PIN_TRACE_6_PIN                              (DL_GPIO_PIN_15)
+#define GPIO_TRACE_PIN_TRACE_6_IOMUX                             (IOMUX_PINCM37)
+/* Defines for PIN_TRACE_7: GPIOA.16 with pinCMx 38 on package pin 9 */
+#define GPIO_TRACE_PIN_TRACE_7_PORT                                      (GPIOA)
+#define GPIO_TRACE_PIN_TRACE_7_PIN                              (DL_GPIO_PIN_16)
+#define GPIO_TRACE_PIN_TRACE_7_IOMUX                             (IOMUX_PINCM38)
 /* Port definition for Pin Group GPIO_GW */
 #define GPIO_GW_PORT                                                     (GPIOA)
 
@@ -289,21 +294,22 @@ extern "C" {
 /* Defines for LEFT_DIR: GPIOB.7 with pinCMx 24 on package pin 59 */
 #define PORTB_LEFT_DIR_PIN                                       (DL_GPIO_PIN_7)
 #define PORTB_LEFT_DIR_IOMUX                                     (IOMUX_PINCM24)
-/* Port definition for Pin Group Encoder */
-#define Encoder_PORT                                                     (GPIOB)
-
-/* Defines for A: GPIOB.13 with pinCMx 30 on package pin 1 */
-#define Encoder_A_PIN                                           (DL_GPIO_PIN_13)
-#define Encoder_A_IOMUX                                          (IOMUX_PINCM30)
-/* Defines for B: GPIOB.15 with pinCMx 32 on package pin 3 */
-#define Encoder_B_PIN                                           (DL_GPIO_PIN_15)
-#define Encoder_B_IOMUX                                          (IOMUX_PINCM32)
-/* Defines for C: GPIOB.16 with pinCMx 33 on package pin 4 */
-#define Encoder_C_PIN                                           (DL_GPIO_PIN_16)
-#define Encoder_C_IOMUX                                          (IOMUX_PINCM33)
-/* Defines for D: GPIOB.17 with pinCMx 43 on package pin 14 */
-#define Encoder_D_PIN                                           (DL_GPIO_PIN_17)
-#define Encoder_D_IOMUX                                          (IOMUX_PINCM43)
+/* Defines for A: GPIOA.17 with pinCMx 39 on package pin 10 */
+#define Encoder_A_PORT                                                   (GPIOA)
+#define Encoder_A_PIN                                           (DL_GPIO_PIN_17)
+#define Encoder_A_IOMUX                                          (IOMUX_PINCM39)
+/* Defines for B: GPIOA.18 with pinCMx 40 on package pin 11 */
+#define Encoder_B_PORT                                                   (GPIOA)
+#define Encoder_B_PIN                                           (DL_GPIO_PIN_18)
+#define Encoder_B_IOMUX                                          (IOMUX_PINCM40)
+/* Defines for C: GPIOB.17 with pinCMx 43 on package pin 14 */
+#define Encoder_C_PORT                                                   (GPIOB)
+#define Encoder_C_PIN                                           (DL_GPIO_PIN_17)
+#define Encoder_C_IOMUX                                          (IOMUX_PINCM43)
+/* Defines for D: GPIOB.18 with pinCMx 44 on package pin 15 */
+#define Encoder_D_PORT                                                   (GPIOB)
+#define Encoder_D_PIN                                           (DL_GPIO_PIN_18)
+#define Encoder_D_IOMUX                                          (IOMUX_PINCM44)
 
 /* clang-format on */
 

@@ -11,6 +11,8 @@
 "./Driver/motor.o"
 "./Driver/nqei.o"
 "./System/Delay.o"
+"./System/Path.o"
+"./System/Process.o"
 "./System/Timer.o"
 -l"./device_linker.cmd"
 -ldevice.cmd.genlibs

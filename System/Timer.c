@@ -1,7 +1,4 @@
-#include "ti_msp_dl_config.h"
-#include "stdio.h"
-#include "string.h"
-#include "main.h"
+#include "Timer.h"
 
 void TIMER_1_Init()
 {

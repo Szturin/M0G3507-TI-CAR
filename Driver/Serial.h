@@ -1,5 +1,10 @@
 #ifndef __Serial_H__
 #define __Serial_H__
+
+#include "bsp_system.h"
+#include "stdio.h"
+#include "string.h"
+
 uint8_t Serial_RxPacket[100];
 
 /*PID调试*/
@@ -7,7 +12,6 @@ extern float Test_Kp;//比例
 extern float Test_Ki;//积分
 extern float Test_Kd;//微分
 extern float Test_Ks;//目标速度
-
 /*系统调试串口变量*/
 extern uint8_t Serial_RxFlag;
 extern uint8_t RxState;

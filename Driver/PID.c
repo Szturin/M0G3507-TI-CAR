@@ -1,8 +1,4 @@
 #include "PID.h"
-#include "ti_msp_dl_config.h"
-#include "Serial.h"
-#include "main.h"
-#include "math.h"
 
 uint8_t Trace_Byte;//循迹总状态
 uint8_t Angle_PID_Flag =0;//角度环开启标志位
@@ -10,43 +6,30 @@ uint8_t CV_flag=0;//视觉循迹开启标志位
 uint8_t Test_pid_flag=0;//PID调试标志位
 float K_trace = 0.0615;//减速系数
 float Speed_midset = 30;//预设直线速度
-/*灰度GPIO口宏定义*/
-#define Read_Huidu_IO1	 ((DL_GPIO_readPins(GPIO_TRACE_PORT,GPIO_TRACE_PIN_TRACE_0_PIN) == GPIO_TRACE_PIN_TRACE_0_PIN)?1:0)
-#define Read_Huidu_IO2	 ((DL_GPIO_readPins(GPIO_TRACE_PORT,GPIO_TRACE_PIN_TRACE_1_PIN) == GPIO_TRACE_PIN_TRACE_1_PIN)?1:0)
-#define Read_Huidu_IO3	 ((DL_GPIO_readPins(GPIO_TRACE_PORT,GPIO_TRACE_PIN_TRACE_2_PIN) == GPIO_TRACE_PIN_TRACE_2_PIN)?1:0)
-#define Read_Huidu_IO4	 ((DL_GPIO_readPins(GPIO_TRACE_PORT,GPIO_TRACE_PIN_TRACE_3_PIN) == GPIO_TRACE_PIN_TRACE_3_PIN)?1:0)
-#define Read_Huidu_IO5	 ((DL_GPIO_readPins(GPIO_TRACE_PORT,GPIO_TRACE_PIN_TRACE_4_PIN) == GPIO_TRACE_PIN_TRACE_4_PIN)?1:0)
-#define Read_Huidu_IO6	 ((DL_GPIO_readPins(GPIO_TRACE_PORT,GPIO_TRACE_PIN_TRACE_5_PIN) == GPIO_TRACE_PIN_TRACE_5_PIN)?1:0)
-#define Read_Huidu_IO7	 ((DL_GPIO_readPins(GPIO_TRACE_PORT,GPIO_TRACE_PIN_TRACE_6_PIN) == GPIO_TRACE_PIN_TRACE_6_PIN)?1:0)
-#define Read_Huidu_IO8	 ((DL_GPIO_readPins(GPIO_TRACE_PORT,GPIO_TRACE_PIN_TRACE_7_PIN) == GPIO_TRACE_PIN_TRACE_7_PIN)?1:0)
 
-/*PID结构体定义*/
-typedef struct 
-{
-	float Kp;
-	float Ki;
-	float Kd;
-	float error;
-	float last_error;
-	float error_sum;
-	float error_difference;
-	float filt_velocity;
-	float last_filt_velocity;
-	float velocity_sum;
-}PID;
+/*灰度GPIO口宏定义*/
+#define Read_Huidu_IO1	 ((DL_GPIO_readPins(GPIO_TRACE_PIN_TRACE_0_PORT,GPIO_TRACE_PIN_TRACE_0_PIN) == GPIO_TRACE_PIN_TRACE_0_PIN)?1:0)
+#define Read_Huidu_IO2	 ((DL_GPIO_readPins(GPIO_TRACE_PIN_TRACE_1_PORT,GPIO_TRACE_PIN_TRACE_1_PIN) == GPIO_TRACE_PIN_TRACE_1_PIN)?1:0)
+#define Read_Huidu_IO3	 ((DL_GPIO_readPins(GPIO_TRACE_PIN_TRACE_2_PORT,GPIO_TRACE_PIN_TRACE_2_PIN) == GPIO_TRACE_PIN_TRACE_2_PIN)?1:0)
+#define Read_Huidu_IO4	 ((DL_GPIO_readPins(GPIO_TRACE_PIN_TRACE_3_PORT,GPIO_TRACE_PIN_TRACE_3_PIN) == GPIO_TRACE_PIN_TRACE_3_PIN)?1:0)
+#define Read_Huidu_IO5	 ((DL_GPIO_readPins(GPIO_TRACE_PIN_TRACE_4_PORT,GPIO_TRACE_PIN_TRACE_4_PIN) == GPIO_TRACE_PIN_TRACE_4_PIN)?1:0)
+#define Read_Huidu_IO6	 ((DL_GPIO_readPins(GPIO_TRACE_PIN_TRACE_5_PORT,GPIO_TRACE_PIN_TRACE_5_PIN) == GPIO_TRACE_PIN_TRACE_5_PIN)?1:0)
+#define Read_Huidu_IO7	 ((DL_GPIO_readPins(GPIO_TRACE_PIN_TRACE_6_PORT,GPIO_TRACE_PIN_TRACE_6_PIN) == GPIO_TRACE_PIN_TRACE_6_PIN)?1:0)
+#define Read_Huidu_IO8	 ((DL_GPIO_readPins(GPIO_TRACE_PIN_TRACE_7_PORT,GPIO_TRACE_PIN_TRACE_7_PIN) == GPIO_TRACE_PIN_TRACE_7_PIN)?1:0)
+
 
 /*结构体初始化*/
 PID Velocity;
 PID Velocity_L;
 PID trace_hd;
+PID Test;
 
 /*速度环PID*/
-
 void Velocity_PID_Init()
 {
     Velocity.Kp = -1.33;
     Velocity.Kd = -0.22;
-    Velocity.Ki = -0.012;
+    Velocity.Ki = -0.012;   
 }
 
 void Velocity_L_PID_Init()
@@ -86,85 +69,11 @@ void I_amplitude_limiting(float number,float *Error_sum)
 	}
 }
 
-/*速度环PID控制器*/
-float Velocity_PID_L(float velocity,float velocity_calcu)
-{
-	/*
-	float a = 0.3;
-	static float filt_velocity=0;
-	static float last_filt_velocity=0;
-	*/
-
-    /*
-    if(Test_pid_flag==1)//调试模式
-    {
-        velocity_calcu = Test_Ks/10.0;
-        Velocity_L.Kp = -Test_Kp/100.0;
-        Velocity_L.Ki = -Test_Ki/1000.0;
-        Velocity_L.Kd = -Test_Kd/100.0;
-    }
-    else//PID参数重载
-    {
-        Velocity_PID_Init();
-    }
-    */
-    
-    if(Test_pid_flag==1)//调试模式
-    {
-        velocity_calcu = Test_Ks/10.0;
-    }
-    else//PID参数重载
-    {
-        Velocity_PID_Init();
-    }
-    
-	Velocity_L.error = velocity - velocity_calcu;//误差值
-	Velocity_L.error_difference = Velocity_L.error - Velocity_L.last_error;
-	Velocity_L.last_error = Velocity_L.error;
-	I_amplitude_limiting(5000,&Velocity_L.error_sum);
-	Velocity_L.error_sum += Velocity_L.error;//误差累加
-
-	
-	return (Velocity_L.Kp*Velocity_L.error)+(Velocity_L.Kd*Velocity_L.error_difference)+(Velocity_L.Ki*Velocity_L.error_sum);
-}
-
-float Velocity_PID_R(float velocity,float velocity_calcu)
-{
-	/*
-	float a = 0.3;
-	static float filt_velocity=0;
-	static float last_filt_velocity=0;
-	*/
-    if(Test_pid_flag==1)//调试模式
-    {
-        velocity_calcu = Test_Ks/10.0;
-       Velocity.Kp = -Test_Kp/100.0;
-       Velocity.Ki = -Test_Ki/1000.0;
-        Velocity.Kd = -Test_Kd/100.0;
-    }
-    else//PID参数重载
-    {
-        Velocity_PID_Init();
-    }
-/*
-    if(Test_pid_flag==1)//调试模式
-    {
-        velocity_calcu = Test_Ks/10.0;
-    }
-    else//PID参数重载
-    {
-        Velocity_PID_Init();
-    }
-*/
-	Velocity.error = velocity - velocity_calcu;//误差值
-	Velocity.error_difference = Velocity.error - Velocity.last_error;
-	Velocity.last_error = Velocity.error;
-	I_amplitude_limiting(5000,&Velocity.error_sum);
-	Velocity.error_sum += Velocity.error;//误差累加
-
-	
-	return (Velocity.Kp*Velocity.error)+(Velocity.Kd*Velocity.error_difference)+(Velocity.Ki*Velocity.error_sum);
-}
+/**
+  * @brief			获取灰度巡线路数
+  * @param		    无
+  * @retval 		识别路数			
+  */
 char Huidu_Counter()
 {
     uint8_t hd_sum = 0;
@@ -177,7 +86,19 @@ char Huidu_Counter()
     return hd_sum;
 }
 
-/*循迹环PID控制器*/
+/**
+  * @brief			灰度状态读取函数
+  * @param		    无
+  * @retval 		无			
+  */
+void Get_TraceData()
+{
+    Trace_Byte = (Read_Huidu_IO1<<7) + (Read_Huidu_IO2 << 6) + (Read_Huidu_IO3 << 5) + (Read_Huidu_IO4 <<4) 
+                 + (Read_Huidu_IO5 << 3) +(Read_Huidu_IO6 <<2) +(Read_Huidu_IO7 <<1) + Read_Huidu_IO8;//8路灰度循迹状态
+}
+
+
+/*八路循迹环PID控制器*/
 float Turn_hd_PID()
 {	
     uint8_t temp_hd_sum = 0;
@@ -286,7 +207,39 @@ float Turn_hd_PID()
     return trace_hd.error*trace_hd.Kp  + trace_hd.error_difference * trace_hd.Kd;//PD环循迹，比例+积分
 }
 
-/*（七路）循迹环PID控制器*/
+/*转向环PID控制器*/
+float Turn_imu_PID(int yaw, int caclu_yaw)
+{	
+    float Kp = -1.35;
+    float Kd = -9.5;
+    float Ki = 0;
+
+    static float error ;
+    static float last_error;
+    static float error_diff;
+    static float error_sum;
+
+    error = yaw -caclu_yaw;
+    error_sum += error;
+
+    I_amplitude_limiting(1000,&error_sum);//误差累加量限幅
+
+    error_diff = error-last_error;
+    last_error = error;
+
+    
+    if (error > 180) // 防止小车转到180度时一直旋转的问题
+        error = error - 360;
+    if (error < -180)
+        error = error + 360;
+    
+
+    return Kp * error + Kd * error_diff + Ki*error_sum;
+}
+
+
+/*
+*（七路）循迹环PID控制器
 float Turn_hd_PID_Seven()
 {	
     uint8_t temp_hd_sum = 0;
@@ -366,13 +319,9 @@ float Turn_hd_PID_Seven()
 
     return trace_hd.error*trace_hd.Kp  + trace_hd.error_difference * trace_hd.Kd;//PD环循迹，比例+积分
 }
+*/
 
-void Get_TraceData()
-{
-    Trace_Byte = (Read_Huidu_IO1<<7) + (Read_Huidu_IO2 << 6) + (Read_Huidu_IO3 << 5) + (Read_Huidu_IO4 <<4) 
-                 + (Read_Huidu_IO5 << 3) +(Read_Huidu_IO6 <<2) +(Read_Huidu_IO7 <<1) + Read_Huidu_IO8;//8路灰度循迹状态
-}
-
+/*
 //视觉循迹PID
 float Turn_cv_PID(int measure, int caclu)
 {
@@ -390,33 +339,86 @@ float Turn_cv_PID(int measure, int caclu)
     err_sum += err_difference;
     return Kp * err + Ki * err_sum + Kd * err_difference;
 }
+*/
 
-/*转向环PID控制器*/
-float Turn_imu_PID(int yaw, int caclu_yaw)
-{	
-    float Kp = -1.35;
-    float Kd = -9.5;
-    float Ki = 0;
+/*
+*速度环PID控制器*
+float Velocity_PID_L(float velocity,float velocity_calcu)
+{
+	*
+	float a = 0.3;
+	static float filt_velocity=0;
+	static float last_filt_velocity=0;
+	*
 
-    static float error ;
-    static float last_error;
-    static float error_diff;
-    static float error_sum;
-
-    error = yaw -caclu_yaw;
-    error_sum += error;
-
-    I_amplitude_limiting(1000,&error_sum);//误差累加量限幅
-
-    error_diff = error-last_error;
-    last_error = error;
-
+    *
+    if(Test_pid_flag==1)//调试模式
+    {
+        velocity_calcu = Test_Ks/10.0;
+        Velocity_L.Kp = -Test_Kp/100.0;
+        Velocity_L.Ki = -Test_Ki/1000.0;
+        Velocity_L.Kd = -Test_Kd/100.0;
+    }
+    else//PID参数重载
+    {
+        Velocity_PID_Init();
+    }
+    *
     
-    if (error > 180) // 防止小车转到180度时一直旋转的问题
-        error = error - 360;
-    if (error < -180)
-        error = error + 360;
+    if(Test_pid_flag==1)//调试模式
+    {
+        velocity_calcu = Test_Ks/10.0;
+    }
+    else//PID参数重载
+    {
+        Velocity_PID_Init();
+    }
     
+	Velocity_L.error = velocity - velocity_calcu;//误差值
+	Velocity_L.error_difference = Velocity_L.error - Velocity_L.last_error;
+	Velocity_L.last_error = Velocity_L.error;
+	I_amplitude_limiting(5000,&Velocity_L.error_sum);
+	Velocity_L.error_sum += Velocity_L.error;//误差累加
 
-    return Kp * error + Kd * error_diff + Ki*error_sum;
+	
+	return (Velocity_L.Kp*Velocity_L.error)+(Velocity_L.Kd*Velocity_L.error_difference)+(Velocity_L.Ki*Velocity_L.error_sum);
 }
+
+float Velocity_PID_R(float velocity,float velocity_calcu)
+{
+	*
+	float a = 0.3;
+	static float filt_velocity=0;
+	static float last_filt_velocity=0;
+	*
+    if(Test_pid_flag==1)//调试模式
+    {
+        velocity_calcu = Test_Ks/10.0;
+       Velocity.Kp = -Test_Kp/100.0;
+       Velocity.Ki = -Test_Ki/1000.0;
+        Velocity.Kd = -Test_Kd/100.0;
+    }
+    else//PID参数重载
+    {
+        Velocity_PID_Init();
+    }
+*
+    if(Test_pid_flag==1)//调试模式
+    {
+        velocity_calcu = Test_Ks/10.0;
+    }
+    else//PID参数重载
+    {
+        Velocity_PID_Init();
+    }
+*
+	Velocity.error = velocity - velocity_calcu;//误差值
+	Velocity.error_difference = Velocity.error - Velocity.last_error;
+	Velocity.last_error = Velocity.error;
+	I_amplitude_limiting(5000,&Velocity.error_sum);
+	Velocity.error_sum += Velocity.error;//误差累加
+
+	
+	return (Velocity.Kp*Velocity.error)+(Velocity.Kd*Velocity.error_difference)+(Velocity.Ki*Velocity.error_sum);
+}
+*/
