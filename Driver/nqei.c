@@ -7,22 +7,21 @@ encoder NEncoder={
 systime timer_qei1,timer_qei0;
 
 motor_config trackless_motor={
-	.left_encoder_dir_config=left_motor_encoder_dir_default,	        //??????????????
-	.right_encoder_dir_config=right_motor_encoder_dir_default,          //??????????????
-	.left_motion_dir_config=left_motion_dir_default,					//???????????????
-	.right_motion_dir_config=right_motion_dir_default,				    //???????????????
-	.wheel_radius_cm=tire_radius_cm_default,							//????????
-	.pulse_num_per_circle=pulse_cnt_per_circle_default,				    //????????????????????????????
+	.left_encoder_dir_config=left_motor_encoder_dir_default,	//编码器方向配置
+	.right_encoder_dir_config=right_motor_encoder_dir_default,//编码器方向配置
+	.left_motion_dir_config=left_motion_dir_default,					//电机运动方向配置
+	.right_motion_dir_config=right_motion_dir_default,				//电机运动方向配置
+	.wheel_radius_cm=tire_radius_cm_default,									//驱动轮的半径
+	.pulse_num_per_circle=pulse_cnt_per_circle_default,				//驱动轮转动一圈时编码器的脉冲累计值
 };
 
-
 /***************************************
-??????:	void QEI0_IRQHandler(void)
-???: QEI0?��????????
-????:	??
-????:	??
-???:	??
-????:	????????
+函数名:	void QEI0_IRQHandler(void)
+说明: QEI0中断服务函数
+入口:	无
+出口:	无
+备注:	无
+作者:	无名创新
 ***************************************/
 void QEI0_IRQHandler(void)
 {
@@ -43,12 +42,12 @@ void QEI0_IRQHandler(void)
 }
 
 /***************************************
-??????:	void QEI1_IRQHandler(void)
-???: QEI1?��????????
-????:	??
-????:	??
-???:	??
-????:	????????
+函数名:	void QEI1_IRQHandler(void)
+说明: QEI1中断服务函数
+入口:	无
+出口:	无
+备注:	无
+作者:	无名创新
 ***************************************/
 void QEI1_IRQHandler(void)
 {
@@ -69,73 +68,61 @@ void QEI1_IRQHandler(void)
 }
 
 /***************************************
-??????:	void get_left_motor_speed(void)
-???: ??????????????????
-????:	??
-????:	??
-???:	????��????????????,?????rpm??cm/s
-????:	????????
+函数名:	void get_left_motor_speed(void)
+说明: 获取左边轮子实际速度值
+入口:	无
+出口:	无
+备注:	将单位时间内的脉冲数,转化成rpm、cm/s
+作者:	无名创新
 ***************************************/
 float get_left_motor_speed(void)
 {
 	static uint16_t cnt1=0;cnt1++;
-    float period_temp;
 	if(cnt1>=4)
 	{
 		cnt1=0;
 		NEncoder.left_motor_period_ms=20;
-		//????????????????
+		//将速度转化成转每分钟
 		NEncoder.left_motor_speed_rpm=60*(NEncoder.left_motor_period_cnt*1.0f/trackless_motor.pulse_num_per_circle)
 																	/(NEncoder.left_motor_period_ms*0.001f);	
 		NEncoder.left_motor_speed_cmps=2*3.14f*trackless_motor.wheel_radius_cm*(NEncoder.left_motor_speed_rpm/60.0f);
-
-       //period_temp = NEncoder.left_motor_period_cnt;
 		NEncoder.left_motor_period_cnt=0;
-
 	}
-   // period_temp = NEncoder.left_motor_period_cnt;
-   // NEncoder.left_motor_period_cnt=0;
-	return NEncoder.left_motor_speed_rpm;
-   // return period_temp;
+	return NEncoder.left_motor_speed_cmps;
 }
 
 /***************************************
-??????:	void get_right_motor_speed(void)
-???: ?????????????????
-????:	??
-????:	??
-???:	????��????????????,?????rpm??cm/s
-????:	????????
+函数名:	void get_right_motor_speed(void)
+说明: 获取右边轮子实际速度值
+入口:	无
+出口:	无
+备注:	将单位时间内的脉冲数,转化成rpm、cm/s
+作者:	无名创新
 ***************************************/
 float get_right_motor_speed(void)
 {
 	static uint16_t cnt2=0;cnt2++;
-    float period_temp;
 	if(cnt2>=4)
 	{
 		cnt2=0;
 		NEncoder.right_motor_period_ms=20;
-		//????????????????
+		//将速度转化成转每分钟
 		NEncoder.right_motor_speed_rpm=60*(NEncoder.right_motor_period_cnt*1.0f/trackless_motor.pulse_num_per_circle)
 																	/(NEncoder.right_motor_period_ms*0.001f);
 		NEncoder.right_motor_speed_cmps=2*3.14f*trackless_motor.wheel_radius_cm*(NEncoder.right_motor_speed_rpm/60);
-		//period_temp = NEncoder.right_motor_period_cnt;
+		
 		NEncoder.right_motor_period_cnt=0;	
 	}
-    //period_temp = NEncoder.right_motor_period_cnt;
-    //NEncoder.right_motor_period_cnt=0;
-    //return period_temp;
-	return NEncoder.right_motor_speed_rpm;
-   // return period_temp;
+	return NEncoder.right_motor_speed_cmps;
 }
 
 /***************************************
-??????:	void motor_total_cnt_reset(void)
-???: ????????????��
-????:	??
-????:	??
-???:	??
-????:	????????
+函数名:	void motor_total_cnt_reset(void)
+说明: 总脉冲计数复位
+入口:	无
+出口:	无
+备注:	无
+作者:	无名创新
 ***************************************/
 void motor_total_cnt_reset(void)
 {

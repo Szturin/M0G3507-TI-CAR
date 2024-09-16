@@ -121,7 +121,7 @@ void LX_Proc_3()
         Speed_midset=0;
         if(Angle_PID_Flag)
         {
-            Timer_Angel_Sleep_flag = 1;
+            //Timer_Angel_Sleep_flag = 1;
 
             if(fabsf(Yaw - yaw_detect) <= 1.5)
             {
@@ -198,7 +198,7 @@ void LX_Proc_4()
 
         if(Angle_PID_Flag)
         {
-            Timer_Angel_Sleep_flag = 1;
+            //Timer_Angel_Sleep_flag = 1;
             if(fabsf(Yaw - yaw_detect) <= 1.5)
             {
                 motor_total_cnt_reset();

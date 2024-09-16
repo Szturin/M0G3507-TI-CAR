@@ -23,8 +23,8 @@ uint8_t Motor_flag;//电机使能标志位
 float M_Speed_L;//左轮测速
 float M_Speed_R;//右轮测速
 
-uint32_t Timer_Angel_Sleep;
-uint8_t Timer_Angel_Sleep_flag;
+//uint32_t Timer_Angel_Sleep;
+//uint8_t Timer_Angel_Sleep_flag;
 
 //外设列表：
 //1.GPIO        LED
@@ -144,6 +144,7 @@ void TIMER_1_INST_IRQHandler(void)
             Key_Proc();
             if(++Key_Timer == 10){Key_Timer = 0;}
 
+            /*
             if(Timer_Angel_Sleep_flag == 1)//陀螺仪阻塞保护
             {
                 Timer_Angel_Sleep++;
@@ -152,7 +153,8 @@ void TIMER_1_INST_IRQHandler(void)
             {
                 Timer_Angel_Sleep_flag = 0;
             }
-
+            */
+            
             if(++counter_2ms==2)
             {
                 counter_2ms = 0;                    

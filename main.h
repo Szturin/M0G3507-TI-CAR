@@ -16,8 +16,6 @@ extern float MT_R;//右轮速度初值
 extern float K_ZX;
 extern uint8_t RxData;//串口接收寄存器存储变量
 extern uint8_t MID_Speed;//基准速度
-extern uint32_t Timer_Angel_Sleep;
-extern uint8_t Timer_Angel_Sleep_flag;
 extern uint8_t beep_flag;//声光提示标志位
 extern uint8_t beep_key_flag;
 extern uint8_t Motor_flag;
